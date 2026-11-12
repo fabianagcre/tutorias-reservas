@@ -101,3 +101,17 @@ def test_validaciones_de_usuario(svc):
     svc.create_student("Ana", "a@b.com")
     with pytest.raises(ConflictError):
         svc.create_student("Otra", "A@B.com")
+
+
+def test_ca12_cancelar_con_anticipacion(world):
+    s = world["svc"]  # ahora = lunes 07:00; reserva martes 10:00 -> faltan >2 h
+    b = s.create_booking(world["t1"], world["s1"], at(TUE, "10:00"), 60)
+    assert s.cancel_booking(b["id"], world["s1"])["status"] == "cancelled"
+
+
+def test_ca13_no_cancelar_con_menos_de_2h(world):
+    s = world["svc"]
+    b = s.create_booking(world["t1"], world["s1"], at(MON, "08:30"), 60)  # faltan 1.5 h
+    with pytest.raises(ValidationError):
+        s.cancel_booking(b["id"], world["s1"])
+    assert s.get_booking(b["id"])["status"] == "active"
