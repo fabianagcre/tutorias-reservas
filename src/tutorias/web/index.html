@@ -4,18 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reservas de Tutorías</title>
-<link rel="icon" href="data:,">
+<link rel="icon" type="image/png" href="/img/utp-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #0b3052; --body: #5c6b7a; --cyan: #0aaeef; --cyan-d: #0896cb; --coral: #ff3259; --coral-d: #e62549;
-    --soft: #eef4ff; --soft-2: #f6f9ff; --line: #dde6f5; --ok: #1a8a5b; --ok-l: #e5f6ee; --err: #c8274a; --err-l: #ffeaf0;
+    /* Paleta tomada del logo de la UTP: morado, verde oscuro, negro y dorado */
+    --navy: #1f1230; --body: #5f566b; --brand: #482868; --brand-d: #371f50; --green: #284838; --green-d: #1d3629; --gold: #b88828;
+    --soft: #f3eef9; --soft-2: #f9f6fc; --line: #e2d9ee; --ok: #1f6b45; --ok-l: #e6f3ec; --err: #c8274a; --err-l: #ffeaf0;
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: #fff; color: var(--body); font: 16px/1.5 Mulish, "Noto Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
   .wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; }
-  .hl { color: var(--cyan); }
+  .hl { color: var(--brand); }
   .muted { color: var(--body); font-size: 14px; opacity: .85; }
   .hidden { display: none !important; }
 
@@ -25,35 +26,34 @@
   header { background: #fff; position: sticky; top: 0; z-index: 5; box-shadow: 0 1px 0 var(--line); }
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding-block: 12px; flex-wrap: wrap; }
   .brand { font-size: 22px; font-weight: 800; color: var(--navy); letter-spacing: -.3px; display: flex; align-items: center; gap: 8px; }
-  .brand i { width: 30px; height: 30px; border-radius: 9px; background: var(--cyan); display: grid; place-items: center; }
-  .brand i svg { width: 18px; height: 18px; }
-  .brand span { color: var(--cyan); }
+  .brand img { width: 52px; height: 52px; object-fit: contain; display: block; }
+  .brand span { color: var(--brand); }
   .user { display: flex; align-items: center; gap: 12px; color: var(--navy); font-weight: 600; font-size: 14px; }
 
   /* botones pastilla */
-  .btn { background: var(--coral); color: #fff; border: 0; padding: 12px 26px; border-radius: 50px; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; transition: background .15s, transform .1s; }
-  .btn:hover { background: var(--coral-d); }
+  .btn { background: var(--brand); color: #fff; border: 0; padding: 12px 26px; border-radius: 50px; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; transition: background .15s, transform .1s; }
+  .btn:hover { background: var(--brand-d); }
   .btn:active { transform: translateY(1px); }
-  .btn:disabled { background: #ffb3c1; cursor: not-allowed; }
-  .btn.cyan { background: var(--cyan); }
-  .btn.cyan:hover { background: var(--cyan-d); }
+  .btn:disabled { background: #c9b8dc; cursor: not-allowed; }
+  .btn.green { background: var(--green); }
+  .btn.green:hover { background: var(--green-d); }
   .btn.ghost { background: var(--soft); color: var(--navy); }
   .btn.ghost:hover { background: var(--line); }
   .btn.danger { background: transparent; color: var(--err); border: 1.5px solid var(--err); padding: 7px 16px; font-size: 13px; }
   .btn.danger:hover { background: var(--err-l); }
   .btn.sm { padding: 8px 18px; font-size: 13px; }
-  button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid rgba(10,174,239,.45); outline-offset: 2px; }
+  button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid rgba(72,40,104,.45); outline-offset: 2px; }
 
   /* hero */
-  .hero { background: linear-gradient(135deg, #e6f0ff 0%, #f3f8ff 55%, #fff 100%); position: relative; overflow: hidden; }
+  .hero { background: linear-gradient(135deg, #ebe2f6 0%, #f6f1fb 55%, #fff 100%); position: relative; overflow: hidden; }
   .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center; padding-block: 48px 70px; }
   .hero h1 { margin: 0 0 22px; font-size: 40px; line-height: 1.15; font-weight: 400; color: var(--navy); }
   .hero h1 strong { display: block; font-weight: 800; }
   .hero .cta { display: flex; gap: 12px; flex-wrap: wrap; }
-  .hero .note { margin: 18px 0 0; font: italic 600 18px/1.3 "Caveat", "Segoe Script", "Comic Sans MS", cursive; color: var(--navy); }
+  .hero .note { margin: 18px 0 0; border-left: 4px solid var(--gold); padding-left: 12px; font: italic 600 18px/1.3 "Caveat", "Segoe Script", "Comic Sans MS", cursive; color: var(--navy); }
   .hero figure.photo { margin: 0; position: relative; justify-self: center; width: 100%; max-width: 440px; }
-  .hero figure.photo img { width: 100%; height: auto; aspect-ratio: 4 / 3.3; object-fit: cover; border-radius: 28px; display: block; box-shadow: 0 24px 60px rgba(11,48,82,.25); }
-  .float { position: absolute; left: -22px; bottom: 28px; background: #fff; border-radius: 16px; padding: 10px 18px 10px 10px; display: flex; gap: 12px; align-items: center; box-shadow: 0 12px 30px rgba(11,48,82,.2); }
+  .hero figure.photo img { width: 100%; height: auto; aspect-ratio: 4 / 3.3; object-fit: cover; border-radius: 28px; display: block; box-shadow: 0 24px 60px rgba(31,18,48,.25); }
+  .float { position: absolute; left: -22px; bottom: 28px; background: #fff; border-radius: 16px; padding: 10px 18px 10px 10px; display: flex; gap: 12px; align-items: center; box-shadow: 0 12px 30px rgba(31,18,48,.2); }
   .float b { width: 38px; height: 38px; border-radius: 50%; background: var(--ok-l); color: var(--ok); display: grid; place-items: center; font-size: 18px; }
   .float strong { display: block; color: var(--navy); font-size: 14px; line-height: 1.2; }
   .float span { font-size: 12px; }
@@ -63,15 +63,15 @@
   main { padding-block: 10px 70px; }
   .sec-title { text-align: center; color: var(--navy); font-size: 28px; font-weight: 800; margin: 8px 0 6px; }
   .sec-sub { text-align: center; margin: 0 0 22px; }
-  .widget { background: #fff; border-radius: 22px; box-shadow: 0 10px 40px rgba(11,48,82,.10); border: 1px solid var(--line); max-width: 860px; margin: 0 auto; }
+  .widget { background: #fff; border-radius: 22px; box-shadow: 0 10px 40px rgba(31,18,48,.10); border: 1px solid var(--line); max-width: 860px; margin: 0 auto; }
   .tabs { display: flex; background: var(--soft-2); border-bottom: 1px solid var(--line); border-radius: 21px 21px 0 0; overflow: hidden; }
   .tab { flex: 1; border: 0; background: transparent; padding: 15px 10px; font: inherit; font-weight: 800; color: var(--body); cursor: pointer; border-bottom: 3px solid transparent; }
-  .tab[aria-selected="true"] { color: var(--navy); background: #fff; border-bottom-color: var(--cyan); }
+  .tab[aria-selected="true"] { color: var(--navy); background: #fff; border-bottom-color: var(--brand); }
   .steps { display: flex; border-bottom: 1px solid var(--line); }
   .step { flex: 1; text-align: center; padding: 13px 6px; font-size: 14px; font-weight: 700; color: #97a6b8; display: flex; justify-content: center; align-items: center; gap: 8px; border-bottom: 3px solid transparent; }
   .step b { width: 22px; height: 22px; border-radius: 50%; background: var(--line); color: #7d8da1; display: grid; place-items: center; font-size: 12px; }
-  .step.on { color: var(--navy); background: var(--soft); border-bottom-color: var(--cyan); }
-  .step.on b { background: var(--cyan); color: #fff; }
+  .step.on { color: var(--navy); background: var(--soft); border-bottom-color: var(--brand); }
+  .step.on b { background: var(--brand); color: #fff; }
   .step.done { color: var(--ok); }
   .step.done b { background: var(--ok); color: #fff; }
   .pane { padding: 28px 30px 32px; }
@@ -79,11 +79,11 @@
 
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
   .tutor { background: var(--soft); border: 2px solid transparent; border-radius: 18px; padding: 22px 14px 18px; cursor: pointer; font: inherit; color: inherit; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: transform .12s, border-color .12s; }
-  .tutor:hover { transform: translateY(-3px); border-color: var(--cyan); }
-  .avatar { width: 84px; height: 84px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), #5a7dff); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 30px; margin-bottom: 8px; box-shadow: 0 0 0 5px #fff, 0 6px 18px rgba(11,48,82,.15); overflow: hidden; }
+  .tutor:hover { transform: translateY(-3px); border-color: var(--brand); }
+  .avatar { width: 84px; height: 84px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--green)); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 30px; margin-bottom: 8px; box-shadow: 0 0 0 5px #fff, 0 6px 18px rgba(31,18,48,.15); overflow: hidden; }
   .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .tutor strong { color: var(--navy); font-size: 17px; }
-  .tutor .go { margin-top: 10px; background: var(--cyan); color: #fff; font-weight: 800; font-size: 14px; padding: 7px 26px; border-radius: 50px; }
+  .tutor .go { margin-top: 10px; background: var(--brand); color: #fff; font-weight: 800; font-size: 14px; padding: 7px 26px; border-radius: 50px; }
 
   label { display: block; font-size: 13px; font-weight: 800; color: var(--navy); margin: 0 0 5px; }
   input, select { font: inherit; padding: 11px 14px; border: 1.5px solid var(--line); border-radius: 12px; background: #fff; color: var(--navy); width: 100%; }
@@ -91,8 +91,8 @@
   .row > div { flex: 1 1 200px; }
   .slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 10px; margin-top: 10px; }
   .slot { padding: 10px 0; border: 2px solid var(--line); background: #fff; border-radius: 50px; cursor: pointer; font: inherit; font-weight: 700; color: var(--navy); }
-  .slot:hover { border-color: var(--cyan); }
-  .slot[aria-pressed="true"] { background: var(--cyan); border-color: var(--cyan); color: #fff; }
+  .slot:hover { border-color: var(--brand); }
+  .slot[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
   .actions { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; justify-content: center; }
   .msg { padding: 12px 16px; border-radius: 14px; margin: 14px 0 0; font-size: 14px; font-weight: 600; text-align: center; }
   .msg.err { background: var(--err-l); color: var(--err); }
@@ -108,18 +108,24 @@
   .pill.active { background: var(--ok-l); color: var(--ok); }
   .pill.cancelled { background: var(--line); color: var(--body); }
   details { margin-top: 18px; text-align: center; }
-  summary { cursor: pointer; color: var(--cyan); font-weight: 800; font-size: 14px; }
+  summary { cursor: pointer; color: var(--brand); font-weight: 800; font-size: 14px; }
   details[open] summary { margin-bottom: 12px; }
   details .row { text-align: left; }
+
+  .photos { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  .ph { width: 58px; height: 58px; border-radius: 50%; border: 3px solid transparent; padding: 0; overflow: hidden; cursor: pointer; background: var(--soft); color: var(--body); font: 700 11px/1.1 inherit; display: grid; place-items: center; }
+  .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ph:hover { border-color: var(--line); }
+  .ph[aria-checked="true"] { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(72,40,104,.25); }
 
   /* desplegable y calendario propios */
   .dd, .dp { position: relative; }
   .field { display: flex; justify-content: space-between; align-items: center; gap: 10px; width: 100%; padding: 11px 14px; border: 1.5px solid var(--line); border-radius: 12px; background: #fff; color: var(--navy); font: inherit; cursor: pointer; text-align: left; transition: border-color .15s, box-shadow .15s; }
-  .field:hover { border-color: var(--cyan); }
-  .field[aria-expanded="true"] { border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(10,174,239,.15); }
-  .field svg { width: 18px; height: 18px; flex: none; color: var(--cyan); transition: transform .15s; }
+  .field:hover { border-color: var(--brand); }
+  .field[aria-expanded="true"] { border-color: var(--brand); box-shadow: 0 0 0 4px rgba(72,40,104,.15); }
+  .field svg { width: 18px; height: 18px; flex: none; color: var(--brand); transition: transform .15s; }
   .field[aria-expanded="true"] .chev { transform: rotate(180deg); }
-  .pop { position: absolute; z-index: 20; top: calc(100% + 8px); left: 0; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 18px 50px rgba(11,48,82,.18); padding: 10px; }
+  .pop { position: absolute; z-index: 20; top: calc(100% + 8px); left: 0; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 18px 50px rgba(31,18,48,.18); padding: 10px; }
   .dpop { width: min(310px, 86vw); }
   .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
   .cal-title { font-weight: 800; color: var(--navy); text-transform: capitalize; }
@@ -130,14 +136,14 @@
   .cal-grid .wd { font-size: 11px; font-weight: 800; color: #97a6b8; padding: 4px 0; }
   .day { aspect-ratio: 1; border: 0; border-radius: 50%; background: transparent; font: inherit; font-weight: 700; color: var(--navy); cursor: pointer; }
   .day:hover:not(:disabled) { background: var(--soft); }
-  .day.today { box-shadow: inset 0 0 0 2px var(--cyan); }
-  .day.sel { background: var(--cyan); color: #fff; }
+  .day.today { box-shadow: inset 0 0 0 2px var(--gold); }
+  .day.sel { background: var(--brand); color: #fff; }
   .day:disabled { color: #c3cddb; cursor: not-allowed; font-weight: 600; }
   .cal-foot { margin: 8px 2px 0; font-size: 12px; color: var(--body); text-align: center; }
   .opts { list-style: none; margin: 0; padding: 6px; min-width: 100%; }
   .opts li { padding: 10px 14px; border-radius: 10px; display: flex; justify-content: space-between; gap: 14px; color: var(--navy); font-weight: 600; cursor: pointer; white-space: nowrap; }
   .opts li:hover, .opts li:focus-visible { background: var(--soft); outline: none; }
-  .opts li[aria-selected="true"] { color: var(--cyan); font-weight: 800; }
+  .opts li[aria-selected="true"] { color: var(--brand); font-weight: 800; }
 
   footer { text-align: center; padding: 26px 20px 40px; font-size: 13px; background: var(--soft); }
   footer small { display: block; margin-top: 6px; opacity: .8; }
@@ -153,10 +159,10 @@
 </style>
 </head>
 <body>
-<div class="topbar"><div class="wrap">Universidad · Tutorías académicas</div></div>
+<div class="topbar"><div class="wrap">Universidad Tecnológica de Panamá · Tutorías académicas</div></div>
 <header>
   <div class="wrap bar">
-    <div class="brand"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9 15l2 2 4-4"/></svg></i>Reservas de <span>Tutorías</span></div>
+    <div class="brand"><img src="/img/utp-logo.png" alt="Universidad Tecnológica de Panamá" width="52" height="52">Reservas de <span>Tutorías</span></div>
     <div class="user hidden" id="userbox">
       <span id="username"></span>
       <button class="btn ghost sm" id="logout" type="button">Salir</button>
@@ -170,7 +176,7 @@
       <h1>Sistema de reservas online para <strong>Tutorías universitarias</strong></h1>
       <div class="cta">
         <button class="btn" id="ctaBook" type="button">Reservar una tutoría</button>
-        <button class="btn cyan" id="ctaMine" type="button">Mis reservas</button>
+        <button class="btn green" id="ctaMine" type="button">Mis reservas</button>
       </div>
       <p class="note">Sin contraseñas ni mensajes cruzados: solo tu correo.</p>
     </div>
@@ -227,7 +233,10 @@
             <div><label for="tname">Nombre</label><input id="tname"></div>
             <div><label for="tsubj">Materias</label><input id="tsubj" placeholder="Cálculo, Física"></div>
           </div>
-          <div class="actions"><button class="btn cyan sm" id="tutorBtn" type="button">Guardar tutor</button></div>
+          <div style="margin-top:14px; text-align:left"><label id="photoLbl">Foto</label>
+            <div class="photos" id="photoPick" role="radiogroup" aria-labelledby="photoLbl"></div>
+          </div>
+          <div class="actions"><button class="btn green sm" id="tutorBtn" type="button">Guardar tutor</button></div>
           <div id="tutorMsg" role="alert"></div>
         </details>
       </div>
@@ -280,7 +289,7 @@
         <div class="summary" id="doneSummary"></div>
         <div class="actions">
           <button class="btn" id="seeMine" type="button">Ver mis reservas</button>
-          <button class="btn cyan" id="again" type="button">Reservar otra</button>
+          <button class="btn green" id="again" type="button">Reservar otra</button>
         </div>
       </div>
     </section>
@@ -295,7 +304,7 @@
     </div>
   </div>
 </main>
-<footer>Proyecto 2 · Tópicos Especiales II · Reservas de tutorías universitarias<small>Fotos: Zoshua Colah, Vitaly Gariev y The Connected Narrative en <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:inherit">Unsplash</a></small></footer>
+<footer>Proyecto 2 · Tópicos Especiales II · Universidad Tecnológica de Panamá<small>Fotos: Zoshua Colah, Vitaly Gariev y The Connected Narrative en <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:inherit">Unsplash</a></small></footer>
 
 <script>
 (() => {
@@ -477,13 +486,15 @@
     state.tutors = await api("GET", "/tutors");
     const box = $("tutors"); box.innerHTML = "";
     $("noTutors").classList.toggle("hidden", state.tutors.length > 0);
-    $("addTutor").open = state.tutors.length === 0;
+    if (!state.tutors.length) $("addTutor").open = true;
     state.tutors.forEach((t) => {
       const b = document.createElement("button");
       b.className = "tutor"; b.type = "button";
       const av = document.createElement("div"); av.className = "avatar"; av.textContent = (t.name[0] || "?").toUpperCase();
-      const ph = document.createElement("img"); ph.alt = t.name; ph.src = `/img/t${((t.id - 1) % 5) + 1}.jpg`;
-      ph.onload = () => { av.textContent = ""; av.appendChild(ph); };
+      if (t.photo > 0) {
+        const ph = document.createElement("img"); ph.alt = t.name; ph.src = `/img/t${t.photo}.jpg`;
+        ph.onload = () => { av.textContent = ""; av.appendChild(ph); };
+      }
       const n = document.createElement("strong"); n.textContent = t.name;
       const s = document.createElement("span"); s.className = "muted"; s.textContent = t.subjects || "Sin materias indicadas";
       const go = document.createElement("span"); go.className = "go"; go.textContent = "Seleccionar";
@@ -493,12 +504,30 @@
     });
   }
 
+  let tutorPhoto = 0;
+  function pickPhoto(n) {
+    tutorPhoto = n;
+    $("photoPick").querySelectorAll(".ph").forEach((b) => b.setAttribute("aria-checked", String(Number(b.dataset.n) === n)));
+  }
+  (function buildPhotoPicker() {
+    const box = $("photoPick");
+    for (let n = 0; n <= 5; n++) {
+      const b = document.createElement("button"); b.type = "button"; b.className = "ph"; b.dataset.n = n;
+      b.setAttribute("role", "radio"); b.setAttribute("aria-label", n === 0 ? "Sin foto" : `Foto ${n}`);
+      if (n === 0) b.textContent = "Sin foto";
+      else { const i = document.createElement("img"); i.src = `/img/t${n}.jpg`; i.alt = ""; b.appendChild(i); }
+      b.onclick = () => pickPhoto(n);
+      box.appendChild(b);
+    }
+    pickPhoto(0);
+  })();
+
   $("tutorBtn").onclick = async () => {
     const name = $("tname").value.trim();
     if (!name) return show($("tutorMsg"), "El nombre es obligatorio.", "err");
     try {
-      await api("POST", "/tutors", { name, subjects: $("tsubj").value.trim() });
-      $("tname").value = ""; $("tsubj").value = "";
+      await api("POST", "/tutors", { name, subjects: $("tsubj").value.trim(), photo: tutorPhoto });
+      $("tname").value = ""; $("tsubj").value = ""; pickPhoto(0);
       await loadTutors(); show($("tutorMsg"), "Tutor agregado.", "ok");
     } catch (err) { show($("tutorMsg"), err.message, "err"); }
   };

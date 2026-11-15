@@ -13,4 +13,6 @@ Se redimensionaron a 1200×900 (hero) y 360×360 (retratos) y se descargaron al 
 | `t4.jpg` | Vitaly Gariev | https://unsplash.com/photos/a-smiling-man-with-a-beard-wearing-a-collared-shirt-4HNK1yce-Vg |
 | `t5.jpg` | Vitaly Gariev | https://unsplash.com/photos/a-smiling-man-with-short-brown-hair-and-beard-SNvrVyUYyK0 |
 
+`utp-logo.png`: escudo de la Universidad Tecnológica de Panamá, aportado por el equipo (uso académico).
+
 Los retratos son solo ilustrativos: no representan a tutores reales.
