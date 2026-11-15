@@ -175,7 +175,7 @@
   const ymd = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
   const fmtDate = (iso) => { const d = new Date(iso); return `${DIAS[d.getDay()]} ${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`; };
   const fmtTime = (iso) => iso.slice(11, 16);
-  const tutorName = (id) => (state.tutors.find((t) => t.id === id) || {}).name || `Tutor ${id}`;
+  const tutorName = (id) => (state.tutors.find((t) => t.id === id) || {}).name || "Tutor eliminado";
   const addMin = (hhmm, m) => { const [h, mi] = hhmm.split(":").map(Number); const t = h * 60 + mi + m; return `${pad(Math.floor(t / 60))}:${pad(t % 60)}`; };
   function nextWeekday(from) { const d = new Date(from); while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1); return d; }
 

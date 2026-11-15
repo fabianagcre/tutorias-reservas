@@ -74,18 +74,72 @@
   }
   pickPhoto(0);
 
-  async function load() {
-    const list = await api("GET", "/tutors");
+  let tutors = [], editing = null, editPhoto = 0, pendingDelete = null;
+
+  async function load() { tutors = await api("GET", "/tutors"); render(); }
+
+  function avatarFor(t) {
+    const av = document.createElement("div"); av.className = "avatar"; av.textContent = (t.name[0] || "?").toUpperCase();
+    if (t.photo > 0) { const ph = document.createElement("img"); ph.alt = t.name; ph.src = `/img/t${t.photo}.jpg`; ph.onload = () => { av.textContent = ""; av.appendChild(ph); }; }
+    return av;
+  }
+
+  function render() {
     const box = $("tutors"); box.innerHTML = "";
-    $("noTutors").classList.toggle("hidden", list.length > 0);
-    list.forEach((t) => {
-      const c = document.createElement("div"); c.className = "tutor static";
-      const av = document.createElement("div"); av.className = "avatar"; av.textContent = (t.name[0] || "?").toUpperCase();
-      if (t.photo > 0) { const ph = document.createElement("img"); ph.alt = t.name; ph.src = `/img/t${t.photo}.jpg`; ph.onload = () => { av.textContent = ""; av.appendChild(ph); }; }
-      const n = document.createElement("strong"); n.textContent = t.name;
-      const s = document.createElement("span"); s.className = "muted"; s.textContent = t.subjects || "Sin materias indicadas";
-      c.append(av, n, s); box.appendChild(c);
-    });
+    $("noTutors").classList.toggle("hidden", tutors.length > 0);
+    tutors.forEach((t) => box.appendChild(t.id === editing ? editCard(t) : viewCard(t)));
+  }
+
+  function viewCard(t) {
+    const c = document.createElement("div"); c.className = "tutor static";
+    const n = document.createElement("strong"); n.textContent = t.name;
+    const s = document.createElement("span"); s.className = "muted"; s.textContent = t.subjects || "Sin materias indicadas";
+    const acts = document.createElement("div"); acts.className = "card-actions";
+    const ed = document.createElement("button"); ed.type = "button"; ed.className = "btn green sm"; ed.textContent = "Editar";
+    ed.onclick = () => { editing = t.id; editPhoto = t.photo; pendingDelete = null; show($("tutorMsg"), ""); render(); };
+    const del = document.createElement("button"); del.type = "button"; del.className = "btn danger";
+    del.textContent = pendingDelete === t.id ? "Sí, eliminar" : "Eliminar";
+    del.onclick = async () => {
+      if (pendingDelete !== t.id) { pendingDelete = t.id; show($("tutorMsg"), ""); return render(); }
+      pendingDelete = null;
+      try { await api("DELETE", `/tutors/${t.id}`); await load(); show($("tutorMsg"), `Tutor «${t.name}» eliminado.`, "ok"); }
+      catch (err) { render(); show($("tutorMsg"), err.message, "err"); }
+    };
+    acts.append(ed, del);
+    c.append(avatarFor(t), n, s, acts);
+    return c;
+  }
+
+  function editCard(t) {
+    const c = document.createElement("div"); c.className = "tutor static editing";
+    const l1 = document.createElement("label"); l1.textContent = "Nombre";
+    const name = document.createElement("input"); name.value = t.name;
+    const l2 = document.createElement("label"); l2.textContent = "Materias"; l2.style.marginTop = "8px";
+    const subj = document.createElement("input"); subj.value = t.subjects;
+    const l3 = document.createElement("label"); l3.textContent = "Foto"; l3.style.marginTop = "8px";
+    const row = document.createElement("div"); row.className = "photos"; row.setAttribute("role", "radiogroup");
+    const mark = () => row.querySelectorAll(".ph").forEach((b) => b.setAttribute("aria-checked", String(Number(b.dataset.n) === editPhoto)));
+    for (let n = 0; n <= 5; n++) {
+      const b = document.createElement("button"); b.type = "button"; b.className = "ph"; b.dataset.n = n;
+      b.setAttribute("role", "radio"); b.setAttribute("aria-label", n === 0 ? "Sin foto" : `Foto ${n}`);
+      if (n === 0) b.textContent = "Sin"; else { const i = document.createElement("img"); i.src = `/img/t${n}.jpg`; i.alt = ""; b.appendChild(i); }
+      b.onclick = () => { editPhoto = n; mark(); };
+      row.appendChild(b);
+    }
+    mark();
+    const acts = document.createElement("div"); acts.className = "card-actions";
+    const ok = document.createElement("button"); ok.type = "button"; ok.className = "btn sm"; ok.textContent = "Guardar";
+    ok.onclick = async () => {
+      try {
+        await api("PATCH", `/tutors/${t.id}`, { name: name.value, subjects: subj.value.trim(), photo: editPhoto });
+        editing = null; await load(); show($("tutorMsg"), "Cambios guardados.", "ok");
+      } catch (err) { show($("tutorMsg"), err.message, "err"); }
+    };
+    const no = document.createElement("button"); no.type = "button"; no.className = "btn ghost sm"; no.textContent = "Cancelar";
+    no.onclick = () => { editing = null; show($("tutorMsg"), ""); render(); };
+    acts.append(ok, no);
+    c.append(l1, name, l2, subj, l3, row, acts);
+    return c;
   }
 
   $("tutorBtn").onclick = async () => {
