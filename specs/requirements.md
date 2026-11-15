@@ -12,6 +12,9 @@ Trazabilidad: cada requisito apunta a un outcome (O#).
 | RF5 | Rechazar reservas que violen las reglas de negocio con un error claro | O1, O5 |
 | RF6 | Cancelar una reserva; el espacio vuelve a estar disponible | O3, O4 |
 | RF7 | Listar reservas de un estudiante y de un tutor | O3 |
+| RF8 | Listar los tutores registrados (nombre y materias) para que el estudiante elija | O2 |
+| RF9 | Identificar a un estudiante por su correo (sin contraseña, alcance del curso) | O3 |
+| RF10 | Interfaz web por pasos: elegir tutor → fecha y horario libre → duración → confirmar → ver y cancelar mis reservas; los errores de reglas se muestran con el mensaje de la API | O2, O3, O5 |
 
 ## No funcionales
 | ID | Requisito |

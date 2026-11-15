@@ -17,3 +17,7 @@
 | CA13 | Dada una reserva que inicia en 1 h, cuando el dueño cancela, entonces 422 y la reserva sigue activa. | RN10 |
 | CA14 | Dado ahora = lunes 10:00, cuando un estudiante reserva una tutoría que inicia exactamente 14 días después (lunes 10:00), entonces se acepta. | RN11 |
 | CA15 | Dado ahora = lunes 10:00, cuando un estudiante reserva una tutoría que inicia 14 días y 30 min después (lunes 10:30), entonces 422. | RN11 |
+| CA16 | Dados dos tutores registrados, cuando se consulta `GET /tutors`, entonces devuelve ambos con nombre y materias. | RF8 |
+| CA17 | Dado un estudiante registrado, cuando se consulta `GET /students/by-email` con su correo (sin importar mayúsculas), entonces 200 con sus datos; con un correo desconocido, 404. | RF9 |
+| CA18 | Cuando se abre `GET /`, entonces 200 con la página HTML de reservas. | RF10 |
+| CA19 | Desde la interfaz, el flujo reservar → ver en "Mis reservas" → cancelar funciona, y un conflicto (409) o violación de regla (422) se muestra con el mensaje de la API. | RF10, RN1–RN11 |
