@@ -32,7 +32,9 @@ def test_ca17_estudiante_por_correo(client):
 
 
 def test_ca17_correo_desconocido_404(client):
-    assert client.get("/students/by-email", params={"email": "nadie@utp.ac.pa"}).status_code == 404
+    r = client.get("/students/by-email", params={"email": "nadie@utp.ac.pa"})
+    assert r.status_code == 404
+    assert "correo" in r.json()["detail"]
 
 
 def test_ca18_pagina_principal(client):

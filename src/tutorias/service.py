@@ -56,6 +56,16 @@ class TutoringService:
             raise ConflictError("Ya existe un estudiante con ese correo")
         return {"id": cur.lastrowid, "name": name.strip(), "email": email.lower()}
 
+    def list_tutors(self) -> list[dict]:
+        rows = self.conn.execute("SELECT * FROM tutors ORDER BY id").fetchall()
+        return [dict(r) for r in rows]
+
+    def find_student_by_email(self, email: str) -> dict:
+        row = self.conn.execute("SELECT * FROM students WHERE email = ?", (email.strip().lower(),)).fetchone()
+        if not row:
+            raise NotFoundError("No hay un estudiante registrado con ese correo")
+        return dict(row)
+
     def _require(self, table: str, id_: int) -> sqlite3.Row:
         row = self.conn.execute(f"SELECT * FROM {table} WHERE id = ?", (id_,)).fetchone()
         if not row:

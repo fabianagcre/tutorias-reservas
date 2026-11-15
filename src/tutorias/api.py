@@ -1,11 +1,15 @@
 from datetime import date, datetime
+from pathlib import Path
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, field_validator
 
 from .db import connect
 from .service import BookingError, TutoringService
+
+
+WEB_DIR = Path(__file__).parent / "web"
 
 
 class TutorIn(BaseModel):
@@ -43,6 +47,18 @@ def create_app(service: TutoringService | None = None) -> FastAPI:
     @app.exception_handler(BookingError)
     async def _handle(_: Request, exc: BookingError):
         return JSONResponse(status_code=exc.status, content={"detail": str(exc)})
+
+    @app.get("/", include_in_schema=False)
+    def home():
+        return FileResponse(WEB_DIR / "index.html")
+
+    @app.get("/tutors")
+    def list_tutors():
+        return svc.list_tutors()
+
+    @app.get("/students/by-email")
+    def student_by_email(email: str):
+        return svc.find_student_by_email(email)
 
     @app.post("/tutors", status_code=201)
     def create_tutor(body: TutorIn):
