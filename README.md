@@ -10,7 +10,7 @@ pip install -r requirements.txt
 uvicorn --app-dir src tutorias.api:create_app --factory --reload
 pytest
 ```
-Interfaz web: http://localhost:8000/ · Documentación interactiva de la API: http://localhost:8000/docs
+Interfaz web (estudiante): http://localhost:8000/ · Panel del administrador (alta de tutores): http://localhost:8000/admin · Documentación interactiva de la API: http://localhost:8000/docs
 
 ## Estructura
 - `specs/` outcomes, requisitos, reglas de negocio, arquitectura, modelo de datos, API, criterios de aceptación, plan

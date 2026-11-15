@@ -46,6 +46,7 @@ def create_app(service: TutoringService | None = None) -> FastAPI:
     svc = service or TutoringService(connect("tutorias.db"))
     app = FastAPI(title="Reservas de Tutorías")
     app.mount("/img", StaticFiles(directory=WEB_DIR / "img"), name="img")
+    app.mount("/css", StaticFiles(directory=WEB_DIR / "css"), name="css")
 
     @app.exception_handler(BookingError)
     async def _handle(_: Request, exc: BookingError):
@@ -54,6 +55,10 @@ def create_app(service: TutoringService | None = None) -> FastAPI:
     @app.get("/", include_in_schema=False)
     def home():
         return FileResponse(WEB_DIR / "index.html")
+
+    @app.get("/admin", include_in_schema=False)
+    def admin_panel():
+        return FileResponse(WEB_DIR / "admin.html")
 
     @app.get("/tutors")
     def list_tutors():
