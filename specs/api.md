@@ -10,4 +10,4 @@
 | GET | /students/{id}/bookings | Reservas del estudiante | 404 |
 | GET | /tutors/{id}/bookings | Reservas del tutor | 404 |
 
-409 = conflicto de horario; 422 = violación de regla de validación (RN3–RN6).
+409 = conflicto de horario; 422 = violación de regla de validación (RN3–RN6, RN10, RN11).
