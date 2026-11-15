@@ -21,7 +21,7 @@ Documentación interactiva: http://localhost:8000/docs
 | Rol (ciclo 1) | Integrante |
 |---|---|
 | Product / Spec Lead | por asignar |
-| Architecture / Development Lead | por asignar |
+| Architecture / Development Lead | Fabiana |
 | QA / DevOps Lead | por asignar |
 
 Flujo de trabajo: issues → ramas `feature/*` → Pull Request con revisión → merge a `main` (CI con pytest).
