@@ -68,6 +68,8 @@ El profesor puede pedir **un cambio inesperado durante la presentación**. Ensay
 - Al terminar el ensayo **no fusiones** esa rama a `main` (es solo práctica), o descártala.
 
 ### Paso 5 — Material de presentación (tu sección)
+> **Ya existe un deck base de 19 diapositivas** (PR de la rama `docs/presentacion`, carpeta `docs/presentacion/`, con notas del presentador en la tecla N y PDF de respaldo). **No lo rehagas desde cero:** revisa tu sección, corrige datos y mejora el texto (tecla E para editar). Fabiana lo integra.
+
 Hacen falta diapositivas; cada quien arma su parte y Fabiana las une (o se genera una base con IA). **Tu parte: problema y proceso.**
 1. **Problema y outcome (ODD):** pregunta guía, problema, outcomes O1–O6 con sus indicadores (`specs/outcomes.md`).
 2. **De outcomes a especificaciones (SDD):** requisitos, reglas, criterios Dado/Cuando/Entonces, trazabilidad (`specs/`).

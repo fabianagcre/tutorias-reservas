@@ -75,6 +75,8 @@ Responsable de **pruebas, integración y despliegue**. Los pasos, en orden de pr
 Uriel prepara 3 cambios posibles en `docs/ensayo-ce3.md`. Tu rol en el ensayo: **escribir primero las pruebas rojas** a partir de los criterios de aceptación que Uriel redacte, esperar a que Fabiana implemente, y mostrar las pruebas **en verde** y el resultado del CI. Cronometra el ciclo completo (meta < 15 min). La rama de ensayo no se fusiona a `main`.
 
 ### Paso 5 — Material de presentación (tu sección)
+> **Ya existe un deck base de 19 diapositivas** (PR de la rama `docs/presentacion`, carpeta `docs/presentacion/`, con notas del presentador en la tecla N y PDF de respaldo). **No lo rehagas desde cero:** revisa tu sección, corrige datos y mejora el texto (tecla E para editar). Fabiana lo integra.
+
 Cada quien arma su parte y Fabiana las une. **Tu parte: pruebas y calidad.**
 1. **Estrategia de pruebas:** pirámide (unitarias de reglas → conflictos → HTTP → criterios de aceptación), con una captura de `pytest`.
 2. **La regla crítica:** *no doble reserva* — explica `test_concurrency.py` (10 hilos compitiendo por el mismo horario; solo uno gana).
