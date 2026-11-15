@@ -9,6 +9,9 @@ La API traduce errores a HTTP; no duplica reglas.
 ## D3 — Reloj inyectable
 Permite probar RN5 (pasado) y la regla de cancelación sin depender de la hora real.
 
+## D4 — Fechas en hora local sin zona horaria
+El servicio compara `start` con el reloj local (naive). Un `start` con zona (`...Z`) provocaba un 500 (`TypeError` aware vs naive). La API lo rechaza en el validador de `BookingIn` con 422 pidiendo hora local sin zona; es validación de entrada, así que no se toca `service.py` (D2).
+
 ## CE1 — Cambio de especificación: cancelación con 2 horas de anticipación
 **Solicitud (a mitad del desarrollo):** "Un estudiante solo puede cancelar si faltan al menos 2 horas para la tutoría."
 Ciclo seguido: cambio solicitado → `business-rules.md` (RN10) → `acceptance-criteria.md` (CA12/CA13) → `implementation-plan.md` → `service.py` → pruebas → resultados (`docs/testing.md`).

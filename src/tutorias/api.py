@@ -2,7 +2,7 @@ from datetime import date, datetime
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 from .db import connect
 from .service import BookingError, TutoringService
@@ -23,6 +23,13 @@ class BookingIn(BaseModel):
     student_id: int
     start: datetime
     duration_minutes: int
+
+    @field_validator("start")
+    @classmethod
+    def _hora_local(cls, v: datetime) -> datetime:
+        if v.tzinfo is not None:
+            raise ValueError("Use hora local sin zona horaria (p. ej. 2030-01-08T10:00:00)")
+        return v
 
 
 class CancelIn(BaseModel):
