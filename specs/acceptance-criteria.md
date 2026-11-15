@@ -15,3 +15,5 @@
 | CA11 | La disponibilidad no muestra franjas ocupadas por reservas activas. | RF3 |
 | CA12 | Dada una reserva que inicia en 3 h, cuando el dueño cancela, entonces se acepta. | RN10 |
 | CA13 | Dada una reserva que inicia en 1 h, cuando el dueño cancela, entonces 422 y la reserva sigue activa. | RN10 |
+| CA14 | Dado ahora = lunes 10:00, cuando un estudiante reserva una tutoría que inicia exactamente 14 días después (lunes 10:00), entonces se acepta. | RN11 |
+| CA15 | Dado ahora = lunes 10:00, cuando un estudiante reserva una tutoría que inicia 14 días y 30 min después (lunes 10:30), entonces 422. | RN11 |
