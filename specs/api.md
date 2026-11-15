@@ -2,8 +2,8 @@
 
 | Método | Ruta | Descripción | Errores |
 |--------|------|-------------|---------|
-| POST | /tutors | Crea tutor `{name, subjects}` | 422 |
-| GET | /tutors | Lista tutores `[{id, name, subjects}]` | — |
+| POST | /tutors | Crea tutor `{name, subjects, photo?}` (`photo` 0–5, por defecto 0) | 422 |
+| GET | /tutors | Lista tutores `[{id, name, subjects, photo}]` | — |
 | POST | /students | Crea estudiante `{name, email}` | 422, 409 correo duplicado |
 | GET | /students/by-email?email= | Devuelve el estudiante con ese correo (RF9) | 404 |
 | GET | /tutors/{id}/availability?date=YYYY-MM-DD | Franjas libres de 30 min | 404 |

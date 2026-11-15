@@ -5,7 +5,7 @@ Trazabilidad: cada requisito apunta a un outcome (O#).
 ## Funcionales
 | ID | Requisito | Outcome |
 |----|-----------|---------|
-| RF1 | Registrar tutores con nombre y materias | O2 |
+| RF1 | Registrar tutores con nombre, materias y una foto opcional elegida de un catálogo de 5 (0 = sin foto) | O2 |
 | RF2 | Registrar estudiantes con nombre y correo | O3 |
 | RF3 | Consultar disponibilidad de un tutor en una fecha (franjas libres de 30 min) | O2 |
 | RF4 | Crear una reserva (estudiante, tutor, fecha, hora inicio, duración) | O1, O3 |

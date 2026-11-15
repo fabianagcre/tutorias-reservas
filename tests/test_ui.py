@@ -50,3 +50,17 @@ def test_ca20_imagenes_estaticas(client):
         assert r.status_code == 200
         assert r.headers["content-type"] == "image/jpeg"
     assert client.get("/img/no-existe.jpg").status_code == 404
+
+
+def test_ca21_foto_del_tutor(client):
+    a = client.post("/tutors", json={"name": "Ana", "subjects": "Cálculo", "photo": 3})
+    assert a.status_code == 201 and a.json()["photo"] == 3
+    b = client.post("/tutors", json={"name": "Beto", "subjects": "Física"}).json()
+    assert b["photo"] == 0
+    assert [t["photo"] for t in client.get("/tutors").json()] == [3, 0]
+
+
+@pytest.mark.parametrize("valor", [-1, 6, 99])
+def test_ca21_foto_fuera_de_rango_422(client, valor):
+    r = client.post("/tutors", json={"name": "Ana", "subjects": "", "photo": valor})
+    assert r.status_code == 422

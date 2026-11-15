@@ -22,3 +22,4 @@
 | CA18 | Cuando se abre `GET /`, entonces 200 con la página HTML de reservas. | RF10 |
 | CA19 | Desde la interfaz, el flujo reservar → ver en "Mis reservas" → cancelar funciona, y un conflicto (409) o violación de regla (422) se muestra con el mensaje de la API. | RF10, RN1–RN11 |
 | CA20 | Cuando se pide `GET /img/hero.jpg` (y las fotos de tutores `/img/t1.jpg`…`t5.jpg`), entonces 200 con `image/jpeg`; una imagen inexistente da 404. | RF10 |
+| CA21 | Cuando se crea un tutor con `photo` 3, entonces `GET /tutors` lo devuelve con `photo` 3; sin `photo` queda en 0; con `photo` fuera de 0–5, 422. | RF1 |

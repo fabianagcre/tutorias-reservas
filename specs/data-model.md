@@ -1,6 +1,6 @@
 # Modelo de datos
 
-**tutors**(id PK, name, subjects)
+**tutors**(id PK, name, subjects, photo INTEGER 0–5, 0 = sin foto)
 **students**(id PK, name, email UNIQUE)
 **bookings**(id PK, tutor_id FK, student_id FK, start TEXT ISO, end TEXT ISO, status 'active'|'cancelled', created_at, cancelled_at)
 
