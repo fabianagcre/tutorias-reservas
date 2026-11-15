@@ -22,7 +22,7 @@ Rama: `feature/ce1-cancelacion-2h`.
 Ciclo seguido: cambio solicitado → `business-rules.md` (RN11) → `acceptance-criteria.md` (CA14/CA15) → `implementation-plan.md` y `api.md` → pruebas (rojas) → `service.py` → pruebas verdes.
 Borde: exactamente 14 días se acepta; cualquier exceso (incluso 1 s) da 422. Como el "ahora" de `tests/conftest.py` es 07:00 (fuera de RN3), las pruebas fijan el reloj inyectado a las 10:00.
 Rama: `feature/ce2-anticipacion-maxima`.
-Resultado: 28 passed
+Resultado: 28 passed en la rama; 34 passed en `main` tras integrar con QA ciclo 1 (PR #7) y CE2 (PR #8).
 
 ## D5 — Interfaz web estática servida por FastAPI
 **Contexto:** solo había API + Swagger; el estudiante no tenía una forma real de reservar (outcomes O2/O3).
