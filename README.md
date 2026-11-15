@@ -21,7 +21,7 @@ Documentación interactiva: http://localhost:8000/docs
 | Rol | Ciclo 1 (specs/base + CE1) | Ciclo 2 (CE2) |
 |---|---|---|
 | Product / Spec Lead | Fabiana González Crespin (por confirmar) | Uriel Reyna |
-| Architecture / Development Lead | Fabiana González Crespin (por confirmar) | por confirmar |
+| Architecture / Development Lead | Fabiana González Crespin | Fabiana González Crespin |
 | QA / DevOps Lead | Uriel Reyna | por confirmar |
 
 Flujo de trabajo: issues → ramas `feature/*` → Pull Request con revisión → merge a `main` (CI con pytest).
