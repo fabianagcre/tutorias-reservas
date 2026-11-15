@@ -60,6 +60,31 @@ class TutoringService:
             raise ConflictError("Ya existe un estudiante con ese correo")
         return {"id": cur.lastrowid, "name": name.strip(), "email": email.lower()}
 
+    def update_tutor(self, tutor_id: int, name: str | None = None, subjects: str | None = None, photo: int | None = None) -> dict:
+        row = self._require("tutors", tutor_id)
+        new_name = row["name"] if name is None else name.strip()
+        if not new_name:
+            raise ValidationError("El nombre del tutor es obligatorio")
+        new_subjects = row["subjects"] if subjects is None else subjects
+        new_photo = row["photo"] if photo is None else photo
+        if not 0 <= new_photo <= 5:
+            raise ValidationError("La foto debe ser un número entre 0 y 5")
+        self.conn.execute(
+            "UPDATE tutors SET name = ?, subjects = ?, photo = ? WHERE id = ?", (new_name, new_subjects, new_photo, tutor_id)
+        )
+        return dict(self._require("tutors", tutor_id))
+
+    def delete_tutor(self, tutor_id: int) -> dict:
+        self._require("tutors", tutor_id)
+        pendientes = self.conn.execute(
+            "SELECT COUNT(*) FROM bookings WHERE tutor_id = ? AND status = 'active' AND start > ?",
+            (tutor_id, self.now().isoformat()),
+        ).fetchone()[0]
+        if pendientes:  # RN12
+            raise ConflictError(f"No se puede eliminar: el tutor tiene {pendientes} reserva(s) activa(s) pendiente(s). Cancélalas primero.")
+        self.conn.execute("DELETE FROM tutors WHERE id = ?", (tutor_id,))
+        return {"deleted": tutor_id}
+
     def list_tutors(self) -> list[dict]:
         rows = self.conn.execute("SELECT * FROM tutors ORDER BY id").fetchall()
         return [dict(r) for r in rows]

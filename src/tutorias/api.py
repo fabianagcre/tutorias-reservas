@@ -19,6 +19,12 @@ class TutorIn(BaseModel):
     photo: int = Field(default=0, ge=0, le=5)
 
 
+class TutorPatch(BaseModel):
+    name: str | None = None
+    subjects: str | None = None
+    photo: int | None = Field(default=None, ge=0, le=5)
+
+
 class StudentIn(BaseModel):
     name: str
     email: str
@@ -63,6 +69,14 @@ def create_app(service: TutoringService | None = None) -> FastAPI:
     @app.get("/tutors")
     def list_tutors():
         return svc.list_tutors()
+
+    @app.patch("/tutors/{tutor_id}")
+    def update_tutor(tutor_id: int, body: TutorPatch):
+        return svc.update_tutor(tutor_id, body.name, body.subjects, body.photo)
+
+    @app.delete("/tutors/{tutor_id}")
+    def delete_tutor(tutor_id: int):
+        return svc.delete_tutor(tutor_id)
 
     @app.get("/students/by-email")
     def student_by_email(email: str):
