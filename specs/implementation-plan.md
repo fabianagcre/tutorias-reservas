@@ -9,5 +9,6 @@
 | 5 | API FastAPI + pruebas de aceptación | Arquitectura/Dev + QA | ✅ |
 | 6 | CI en GitHub Actions | QA/DevOps | ✅ |
 | 7 | **Cambio de especificación (CE1)**: cancelación solo hasta 2 h antes | Todos | ✅ (RN10, CA12-13) |
+| 8 | **Cambio de especificación (CE2)**: reservar como máximo 14 días antes del inicio | Todos | ✅ (RN11, CA14-15) |
 
-Rotación de roles: ciclo 1 = specs/base, ciclo 2 = cambio CE1 (los roles rotan).
+Rotación de roles: ciclo 1 = specs/base + CE1, ciclo 2 = cambio CE2 (los roles rotan).
