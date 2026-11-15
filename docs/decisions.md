@@ -35,3 +35,8 @@ Resultado: 28 passed
 **Decisión:** el formulario (nombre, materias, foto) vive en una página aparte, `/admin` (RF11, CA22–CA24); la pantalla del estudiante solo reserva y cancela, y si no hay tutores le indica que pida al administrador que los registre. Los estilos se compartieron en `/css/app.css`.
 **Limitación aceptada:** `/admin` y `POST /tutors` no piden contraseña (fuera del alcance del curso). Mejora futura: autenticación de administrador.
 **Mensajes:** los errores se muestran en rojo con ⚠, los éxitos en verde con ✓ y los avisos neutros (p. ej. «no te encontramos, escribe tu nombre») en el color de marca; antes ese aviso salía en verde y parecía un éxito.
+
+## D7 — Editar y eliminar tutores (RF12, RF13, RN12)
+**Decisión:** `PATCH /tutors/{id}` (edición parcial) y `DELETE /tutors/{id}`. Un tutor con reservas activas futuras no se puede eliminar (409): primero deben cancelarse (RN12), para no dejar a estudiantes con una cita sin tutor.
+**Alternativa descartada:** borrado lógico (columna `active`). Era más seguro para el historial pero añadía estado a todas las consultas; se prefirió el borrado real con la regla de bloqueo.
+**Consecuencia:** las reservas históricas (canceladas o pasadas) de un tutor eliminado se conservan y la pantalla del estudiante las muestra como «Tutor eliminado».
