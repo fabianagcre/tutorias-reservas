@@ -64,3 +64,22 @@ def test_ca21_foto_del_tutor(client):
 def test_ca21_foto_fuera_de_rango_422(client, valor):
     r = client.post("/tutors", json={"name": "Ana", "subjects": "", "photo": valor})
     assert r.status_code == 422
+
+
+def test_ca22_panel_admin(client):
+    r = client.get("/admin")
+    assert r.status_code == 200
+    assert "text/html" in r.headers["content-type"]
+    assert "Administración de" in r.text and 'id="tname"' in r.text
+
+
+def test_ca23_el_estudiante_no_ve_el_alta_de_tutores(client):
+    html = client.get("/").text
+    assert 'id="tname"' not in html
+    assert "Agregar un tutor" not in html
+
+
+def test_ca24_hoja_de_estilos(client):
+    r = client.get("/css/app.css")
+    assert r.status_code == 200
+    assert "text/css" in r.headers["content-type"]

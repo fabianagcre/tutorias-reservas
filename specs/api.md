@@ -11,7 +11,9 @@
 | POST | /bookings/{id}/cancel | Cancela `{student_id}` | 403, 404, 409 ya cancelada, 422 (<2 h, RN10) |
 | GET | /students/{id}/bookings | Reservas del estudiante | 404 |
 | GET | /tutors/{id}/bookings | Reservas del tutor | 404 |
-| GET | / | Interfaz web (HTML estático, RF10) | — |
+| GET | / | Interfaz web del estudiante (HTML estático, RF10) | — |
+| GET | /admin | Panel del administrador para registrar tutores (RF11) | — |
+| GET | /css/{archivo} | Hoja de estilos compartida | 404 |
 | GET | /img/{archivo} | Imágenes de la interfaz (fotos de Unsplash, ver `web/img/CREDITOS.md`) | 404 |
 
 409 = conflicto de horario; 422 = violación de regla de validación (RN3–RN6, RN10, RN11).
