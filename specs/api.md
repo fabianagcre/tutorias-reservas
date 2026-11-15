@@ -3,6 +3,8 @@
 | Método | Ruta | Descripción | Errores |
 |--------|------|-------------|---------|
 | POST | /tutors | Crea tutor `{name, subjects, photo?}` (`photo` 0–5, por defecto 0) | 422 |
+| PATCH | /tutors/{id} | Edita tutor; cuerpo parcial `{name?, subjects?, photo?}` (RF12) | 404, 422 |
+| DELETE | /tutors/{id} | Elimina tutor sin reservas activas futuras (RF13, RN12) | 404, 409 |
 | GET | /tutors | Lista tutores `[{id, name, subjects, photo}]` | — |
 | POST | /students | Crea estudiante `{name, email}` | 422, 409 correo duplicado |
 | GET | /students/by-email?email= | Devuelve el estudiante con ese correo (RF9) | 404 |

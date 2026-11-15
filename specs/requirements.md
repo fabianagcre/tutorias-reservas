@@ -16,6 +16,8 @@ Trazabilidad: cada requisito apunta a un outcome (O#).
 | RF9 | Identificar a un estudiante por su correo (sin contraseña, alcance del curso) | O3 |
 | RF10 | Interfaz web por pasos: elegir tutor → fecha y horario libre → duración → confirmar → ver y cancelar mis reservas; los errores de reglas se muestran con el mensaje de la API | O2, O3, O5 |
 | RF11 | El registro de tutores es una función del administrador: vive en una página aparte (`/admin`) y NO aparece en la pantalla del estudiante, que solo reserva y cancela. En esta versión del curso `/admin` no pide contraseña (mejora futura) | O2 |
+| RF12 | El administrador puede editar el nombre, las materias y la foto de un tutor | O2 |
+| RF13 | El administrador puede eliminar un tutor, salvo que tenga reservas activas futuras (RN12) | O1, O2 |
 
 ## No funcionales
 | ID | Requisito |

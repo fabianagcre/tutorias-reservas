@@ -26,3 +26,6 @@
 | CA22 | Cuando se abre `GET /admin`, entonces 200 con la página "Administración de tutores" (formulario de alta de tutores). | RF11 |
 | CA23 | Cuando se abre `GET /` (pantalla del estudiante), entonces NO contiene el formulario de alta de tutores. | RF11 |
 | CA24 | Cuando se pide `GET /css/app.css`, entonces 200 con `text/css`. | RF10 |
+| CA25 | Dado un tutor, cuando el administrador edita solo su nombre o su foto, entonces `GET /tutors` refleja el cambio y conserva los demás campos; con un tutor inexistente, 404; con nombre vacío o foto fuera de 0–5, 422. | RF12 |
+| CA26 | Dado un tutor sin reservas activas futuras, cuando se elimina, entonces 200 y deja de aparecer en `GET /tutors`; un id inexistente da 404. | RF13 |
+| CA27 | Dado un tutor con una reserva activa futura, cuando se intenta eliminar, entonces 409 y el tutor sigue en la lista; tras cancelar la reserva, la eliminación se acepta. | RN12 |
