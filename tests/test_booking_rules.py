@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pytest
 from conftest import MON, SAT, TUE, at
 from tutorias.service import ConflictError, ForbiddenError, ValidationError
@@ -115,3 +117,17 @@ def test_ca13_no_cancelar_con_menos_de_2h(world):
     with pytest.raises(ValidationError):
         s.cancel_booking(b["id"], world["s1"])
     assert s.get_booking(b["id"])["status"] == "active"
+
+
+@pytest.mark.parametrize("ahora,cancela", [("08:00:00", True), ("08:00:01", False), ("07:59:59", True)])
+def test_rn10_borde_exacto_de_2h(world, reloj, ahora, cancela):
+    """RN10: con la reserva a las 10:00, faltar exactamente 2 h aún permite cancelar."""
+    s = world["svc"]
+    b = s.create_booking(world["t1"], world["s1"], at(MON, "10:00"), 60)
+    reloj.ahora = datetime.fromisoformat(f"{MON}T{ahora}")
+    if cancela:
+        assert s.cancel_booking(b["id"], world["s1"])["status"] == "cancelled"
+    else:
+        with pytest.raises(ValidationError):
+            s.cancel_booking(b["id"], world["s1"])
+        assert s.get_booking(b["id"])["status"] == "active"
