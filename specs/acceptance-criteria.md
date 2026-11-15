@@ -13,3 +13,5 @@
 | CA9 | Dada una reserva cancelada, cuando otro estudiante reserva el mismo horario, entonces se acepta; y la disponibilidad lo muestra libre. | RN7, RF6 |
 | CA10 | Cuando un estudiante distinto al dueño cancela, entonces 403. | RN8 |
 | CA11 | La disponibilidad no muestra franjas ocupadas por reservas activas. | RF3 |
+| CA12 | Dada una reserva que inicia en 3 h, cuando el dueño cancela, entonces se acepta. | RN10 |
+| CA13 | Dada una reserva que inicia en 1 h, cuando el dueño cancela, entonces 422 y la reserva sigue activa. | RN10 |

@@ -10,6 +10,7 @@ OPEN = time(8, 0)
 CLOSE = time(18, 0)
 ALLOWED_DURATIONS = (30, 60, 90, 120)
 MAX_PER_DAY = 2
+MIN_CANCEL_HOURS = 2
 
 
 class BookingError(Exception):
@@ -126,6 +127,8 @@ class TutoringService:
             raise ForbiddenError("Solo el estudiante dueño puede cancelar")  # RN8
         if b["status"] == "cancelled":
             raise ConflictError("La reserva ya estaba cancelada")
+        if datetime.fromisoformat(b["start"]) - self.now() < timedelta(hours=MIN_CANCEL_HOURS):
+            raise ValidationError("Solo se puede cancelar con al menos 2 horas de anticipación")  # RN10
         self.conn.execute(
             "UPDATE bookings SET status='cancelled', cancelled_at=? WHERE id=?",
             (self.now().isoformat(), booking_id),

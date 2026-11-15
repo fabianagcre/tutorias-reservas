@@ -8,6 +8,6 @@
 | 4 | Disponibilidad y cancelación | Arquitectura/Dev | ✅ |
 | 5 | API FastAPI + pruebas de aceptación | Arquitectura/Dev + QA | ✅ |
 | 6 | CI en GitHub Actions | QA/DevOps | ✅ |
-| 7 | **Cambio de especificación (CE1)**: cancelación solo hasta 2 h antes | Todos | ver `docs/decisions.md` |
+| 7 | **Cambio de especificación (CE1)**: cancelación solo hasta 2 h antes | Todos | ✅ (RN10, CA12-13) |
 
 Rotación de roles: ciclo 1 = specs/base, ciclo 2 = cambio CE1 (los roles rotan).
