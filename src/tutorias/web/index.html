@@ -5,75 +5,124 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reservas de Tutorías</title>
 <link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f4f6fb; --card: #fff; --ink: #1c2233; --muted: #6b7288; --line: #e2e6f0;
-    --brand: #2f5bea; --brand-d: #2447c0; --brand-l: #e8eeff; --ok: #1a8a5b; --ok-l: #e5f6ee;
-    --err: #c13a3a; --err-l: #fdeaea;
+    --navy: #0b3052; --body: #5c6b7a; --cyan: #0aaeef; --cyan-d: #0896cb; --coral: #ff3259; --coral-d: #e62549;
+    --soft: #eef4ff; --soft-2: #f6f9ff; --line: #dde6f5; --ok: #1a8a5b; --ok-l: #e5f6ee; --err: #c8274a; --err-l: #ffeaf0;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  header { background: var(--card); border-bottom: 1px solid var(--line); }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px; }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; flex-wrap: wrap; }
-  h1 { font-size: 20px; margin: 0; }
-  h1 span { color: var(--brand); }
-  h2 { font-size: 17px; margin: 0 0 12px; }
-  main { padding-block: 22px 60px; }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
-  .muted { color: var(--muted); font-size: 13px; }
-  .user { display: flex; align-items: center; gap: 10px; font-size: 14px; }
-  .tabs { display: flex; gap: 6px; margin-bottom: 16px; }
-  .tab { border: 1px solid var(--line); background: var(--card); padding: 9px 16px; border-radius: 999px; cursor: pointer; font: inherit; color: var(--ink); }
-  .tab[aria-selected="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
-  .steps { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
-  .step { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
-  .step b { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--line); color: var(--muted); font-size: 12px; }
-  .step.on { color: var(--ink); font-weight: 600; }
-  .step.on b { background: var(--brand); color: #fff; }
+  body { margin: 0; background: #fff; color: var(--body); font: 16px/1.5 Mulish, "Noto Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; }
+  .hl { color: var(--cyan); }
+  .muted { color: var(--body); font-size: 14px; opacity: .85; }
+  .hidden { display: none !important; }
+
+  /* barra superior */
+  .topbar { background: var(--soft); font-size: 13px; color: var(--navy); }
+  .topbar .wrap { display: flex; justify-content: flex-end; padding-block: 7px; }
+  header { background: #fff; position: sticky; top: 0; z-index: 5; box-shadow: 0 1px 0 var(--line); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding-block: 12px; flex-wrap: wrap; }
+  .brand { font-size: 22px; font-weight: 800; color: var(--navy); letter-spacing: -.3px; display: flex; align-items: center; gap: 8px; }
+  .brand i { width: 30px; height: 30px; border-radius: 9px; background: var(--cyan); display: grid; place-items: center; }
+  .brand i svg { width: 18px; height: 18px; }
+  .brand span { color: var(--cyan); }
+  .user { display: flex; align-items: center; gap: 12px; color: var(--navy); font-weight: 600; font-size: 14px; }
+
+  /* botones pastilla */
+  .btn { background: var(--coral); color: #fff; border: 0; padding: 12px 26px; border-radius: 50px; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; transition: background .15s, transform .1s; }
+  .btn:hover { background: var(--coral-d); }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled { background: #ffb3c1; cursor: not-allowed; }
+  .btn.cyan { background: var(--cyan); }
+  .btn.cyan:hover { background: var(--cyan-d); }
+  .btn.ghost { background: var(--soft); color: var(--navy); }
+  .btn.ghost:hover { background: var(--line); }
+  .btn.danger { background: transparent; color: var(--err); border: 1.5px solid var(--err); padding: 7px 16px; font-size: 13px; }
+  .btn.danger:hover { background: var(--err-l); }
+  .btn.sm { padding: 8px 18px; font-size: 13px; }
+  button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid rgba(10,174,239,.45); outline-offset: 2px; }
+
+  /* hero */
+  .hero { background: linear-gradient(135deg, #e6f0ff 0%, #f3f8ff 55%, #fff 100%); position: relative; overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center; padding-block: 48px 70px; }
+  .hero h1 { margin: 0 0 22px; font-size: 40px; line-height: 1.15; font-weight: 400; color: var(--navy); }
+  .hero h1 strong { display: block; font-weight: 800; }
+  .hero .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero .note { margin: 18px 0 0; font: italic 600 18px/1.3 "Caveat", "Segoe Script", "Comic Sans MS", cursive; color: var(--navy); }
+  .hero svg.art { width: 100%; max-width: 380px; justify-self: center; }
+  .wave { display: block; width: 100%; height: 46px; margin-top: -45px; position: relative; }
+
+  /* widget */
+  main { padding-block: 10px 70px; }
+  .sec-title { text-align: center; color: var(--navy); font-size: 28px; font-weight: 800; margin: 8px 0 6px; }
+  .sec-sub { text-align: center; margin: 0 0 22px; }
+  .widget { background: #fff; border-radius: 22px; box-shadow: 0 10px 40px rgba(11,48,82,.10); border: 1px solid var(--line); overflow: hidden; max-width: 860px; margin: 0 auto; }
+  .tabs { display: flex; background: var(--soft-2); border-bottom: 1px solid var(--line); }
+  .tab { flex: 1; border: 0; background: transparent; padding: 15px 10px; font: inherit; font-weight: 800; color: var(--body); cursor: pointer; border-bottom: 3px solid transparent; }
+  .tab[aria-selected="true"] { color: var(--navy); background: #fff; border-bottom-color: var(--cyan); }
+  .steps { display: flex; border-bottom: 1px solid var(--line); }
+  .step { flex: 1; text-align: center; padding: 13px 6px; font-size: 14px; font-weight: 700; color: #97a6b8; display: flex; justify-content: center; align-items: center; gap: 8px; border-bottom: 3px solid transparent; }
+  .step b { width: 22px; height: 22px; border-radius: 50%; background: var(--line); color: #7d8da1; display: grid; place-items: center; font-size: 12px; }
+  .step.on { color: var(--navy); background: var(--soft); border-bottom-color: var(--cyan); }
+  .step.on b { background: var(--cyan); color: #fff; }
+  .step.done { color: var(--ok); }
   .step.done b { background: var(--ok); color: #fff; }
-  .step + .step::before { content: ""; width: 22px; height: 1px; background: var(--line); }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
-  .tutor { text-align: left; border: 1.5px solid var(--line); background: #fff; border-radius: 12px; padding: 14px; cursor: pointer; font: inherit; color: inherit; display: flex; gap: 12px; align-items: center; }
-  .tutor:hover { border-color: var(--brand); }
-  .avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--brand); color: #fff; display: grid; place-items: center; font-weight: 700; flex: none; }
-  .tutor strong { display: block; }
-  label { display: block; font-size: 13px; font-weight: 600; margin: 0 0 4px; }
-  input, select { font: inherit; padding: 9px 11px; border: 1.5px solid var(--line); border-radius: 9px; background: #fff; color: var(--ink); width: 100%; }
-  input:focus, select:focus, button:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
-  .row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .row > div { flex: 1 1 180px; }
-  .slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; margin-top: 8px; }
-  .slot { padding: 9px 0; border: 1.5px solid var(--line); background: #fff; border-radius: 9px; cursor: pointer; font: inherit; color: var(--ink); }
-  .slot:hover { border-color: var(--brand); }
-  .slot[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
-  .btn { background: var(--brand); color: #fff; border: 0; padding: 10px 18px; border-radius: 9px; font: inherit; font-weight: 600; cursor: pointer; }
-  .btn:hover { background: var(--brand-d); }
-  .btn:disabled { background: #b9c3e6; cursor: not-allowed; }
-  .btn.ghost { background: transparent; color: var(--brand); border: 1.5px solid var(--brand); }
-  .btn.danger { background: transparent; color: var(--err); border: 1.5px solid var(--err); padding: 6px 12px; }
-  .btn.sm { padding: 6px 12px; font-size: 13px; }
-  .actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
-  .msg { padding: 11px 14px; border-radius: 10px; margin: 12px 0 0; font-size: 14px; }
+  .pane { padding: 28px 30px 32px; }
+  .pane h2 { margin: 0 0 18px; text-align: center; font-size: 24px; font-weight: 800; color: var(--navy); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
+  .tutor { background: var(--soft); border: 2px solid transparent; border-radius: 18px; padding: 22px 14px 18px; cursor: pointer; font: inherit; color: inherit; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: transform .12s, border-color .12s; }
+  .tutor:hover { transform: translateY(-3px); border-color: var(--cyan); }
+  .avatar { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), #5a7dff); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 28px; margin-bottom: 8px; box-shadow: 0 0 0 5px #fff; }
+  .tutor strong { color: var(--navy); font-size: 17px; }
+  .tutor .go { margin-top: 10px; background: var(--cyan); color: #fff; font-weight: 800; font-size: 14px; padding: 7px 26px; border-radius: 50px; }
+
+  label { display: block; font-size: 13px; font-weight: 800; color: var(--navy); margin: 0 0 5px; }
+  input, select { font: inherit; padding: 11px 14px; border: 1.5px solid var(--line); border-radius: 12px; background: #fff; color: var(--navy); width: 100%; }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .row > div { flex: 1 1 200px; }
+  .slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 10px; margin-top: 10px; }
+  .slot { padding: 10px 0; border: 2px solid var(--line); background: #fff; border-radius: 50px; cursor: pointer; font: inherit; font-weight: 700; color: var(--navy); }
+  .slot:hover { border-color: var(--cyan); }
+  .slot[aria-pressed="true"] { background: var(--cyan); border-color: var(--cyan); color: #fff; }
+  .actions { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; justify-content: center; }
+  .msg { padding: 12px 16px; border-radius: 14px; margin: 14px 0 0; font-size: 14px; font-weight: 600; text-align: center; }
   .msg.err { background: var(--err-l); color: var(--err); }
   .msg.ok { background: var(--ok-l); color: var(--ok); }
-  .summary { background: var(--brand-l); border-radius: 12px; padding: 14px 16px; }
-  .summary div { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; }
-  .booking { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); flex-wrap: wrap; }
-  .booking:first-of-type { border-top: 0; }
-  .pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .summary { background: var(--soft); border-radius: 18px; padding: 16px 22px; max-width: 460px; margin: 0 auto; }
+  .summary div { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+  .summary div:last-child { border-bottom: 0; }
+  .summary strong { color: var(--navy); }
+  .check { width: 64px; height: 64px; border-radius: 50%; background: var(--ok-l); color: var(--ok); display: grid; place-items: center; margin: 0 auto 10px; font-size: 32px; font-weight: 800; }
+  .booking { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 18px; background: var(--soft-2); border: 1px solid var(--line); border-radius: 16px; margin-bottom: 10px; flex-wrap: wrap; }
+  .booking strong { color: var(--navy); }
+  .pill { display: inline-block; padding: 3px 12px; border-radius: 50px; font-size: 12px; font-weight: 800; }
   .pill.active { background: var(--ok-l); color: var(--ok); }
-  .pill.cancelled { background: var(--line); color: var(--muted); }
-  .hidden { display: none !important; }
-  details { margin-top: 14px; }
-  summary { cursor: pointer; color: var(--brand); font-size: 13px; }
-  @media (max-width: 520px) { .step span { display: none; } .step.on span { display: inline; } }
+  .pill.cancelled { background: var(--line); color: var(--body); }
+  details { margin-top: 18px; text-align: center; }
+  summary { cursor: pointer; color: var(--cyan); font-weight: 800; font-size: 14px; }
+  details[open] summary { margin-bottom: 12px; }
+  details .row { text-align: left; }
+
+  footer { text-align: center; padding: 26px 20px 40px; font-size: 13px; background: var(--soft); }
+
+  @media (max-width: 760px) {
+    .hero .wrap { grid-template-columns: 1fr; padding-block: 30px 56px; }
+    .hero svg.art { display: none; }
+    .hero h1 { font-size: 30px; }
+    .pane { padding: 22px 16px 26px; }
+    .step span { display: none; } .step.on span { display: inline; }
+    .topbar { display: none; }
+  }
 </style>
 </head>
 <body>
+<div class="topbar"><div class="wrap">Universidad · Tutorías académicas</div></div>
 <header>
   <div class="wrap bar">
-    <h1>Reservas de <span>Tutorías</span></h1>
+    <div class="brand"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9 15l2 2 4-4"/></svg></i>Reservas de <span>Tutorías</span></div>
     <div class="user hidden" id="userbox">
       <span id="username"></span>
       <button class="btn ghost sm" id="logout" type="button">Salir</button>
@@ -81,12 +130,38 @@
   </div>
 </header>
 
-<main class="wrap">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Sistema de reservas online para <strong>Tutorías universitarias</strong></h1>
+      <div class="cta">
+        <button class="btn" id="ctaBook" type="button">Reservar una tutoría</button>
+        <button class="btn cyan" id="ctaMine" type="button">Mis reservas</button>
+      </div>
+      <p class="note">Sin contraseñas ni mensajes cruzados: solo tu correo.</p>
+    </div>
+    <svg class="art" viewBox="0 0 380 300" aria-hidden="true">
+      <rect x="40" y="30" width="300" height="230" rx="24" fill="#fff" stroke="#dde6f5" stroke-width="2"/>
+      <rect x="40" y="30" width="300" height="52" rx="24" fill="#0aaeef"/>
+      <rect x="40" y="58" width="300" height="24" fill="#0aaeef"/>
+      <circle cx="74" cy="56" r="9" fill="#fff" opacity=".9"/><rect x="92" y="50" width="90" height="12" rx="6" fill="#fff" opacity=".9"/>
+      <g fill="#eef4ff"><rect x="64" y="104" width="52" height="34" rx="10"/><rect x="164" y="104" width="52" height="34" rx="10"/><rect x="264" y="104" width="52" height="34" rx="10"/>
+      <rect x="64" y="152" width="52" height="34" rx="10"/><rect x="264" y="152" width="52" height="34" rx="10"/><rect x="64" y="200" width="52" height="34" rx="10"/><rect x="164" y="200" width="52" height="34" rx="10"/></g>
+      <rect x="164" y="152" width="52" height="34" rx="10" fill="#ff3259"/><path d="M178 169l8 8 14-15" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="264" y="200" width="52" height="34" rx="10" fill="#0aaeef"/>
+      <circle cx="330" cy="40" r="22" fill="#ff3259"/><path d="M321 40l6 6 12-12" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+<svg class="wave" viewBox="0 0 1440 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46V20C240 -6 480 -6 720 18s480 26 720 0v28z" fill="#fff"/></svg>
+
+<main class="wrap" id="widget">
 
   <!-- Identificación -->
-  <section class="card" id="login">
-    <h2>Ingresa con tu correo</h2>
-    <p class="muted" style="margin-top:-6px">Sin contraseña: si es tu primera vez, te registramos.</p>
+  <section id="login">
+    <h2 class="sec-title">Ingresa con tu <span class="hl">correo</span></h2>
+    <p class="sec-sub muted">Sin contraseña: si es tu primera vez, te registramos.</p>
+    <div class="widget"><div class="pane">
     <form id="loginForm" novalidate>
       <div class="row">
         <div><label for="email">Correo</label><input id="email" type="email" placeholder="nombre@utp.ac.pa" autocomplete="email" required></div>
@@ -95,10 +170,14 @@
       <div class="actions"><button class="btn" id="loginBtn" type="submit">Continuar</button></div>
       <div id="loginMsg" role="alert"></div>
     </form>
+    </div></div>
   </section>
 
   <!-- App -->
   <div id="app" class="hidden">
+    <h2 class="sec-title">Reserva tu <span class="hl">tutoría</span></h2>
+    <p class="sec-sub muted">Elige tutor, horario y confirma en tres pasos.</p>
+    <div class="widget">
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" id="tabBook" aria-selected="true" type="button">Reservar</button>
       <button class="tab" role="tab" id="tabMine" aria-selected="false" type="button">Mis reservas</button>
@@ -111,8 +190,8 @@
         <div class="step" data-s="3"><b>3</b><span>Confirmar</span></div>
       </div>
 
-      <div class="card" id="s1">
-        <h2>Elige un tutor</h2>
+      <div class="pane" id="s1">
+        <h2>Elige un <span class="hl">tutor</span></h2>
         <div class="grid" id="tutors"></div>
         <p class="muted hidden" id="noTutors">Todavía no hay tutores registrados. Agrega uno para empezar.</p>
         <details id="addTutor">
@@ -121,13 +200,13 @@
             <div><label for="tname">Nombre</label><input id="tname"></div>
             <div><label for="tsubj">Materias</label><input id="tsubj" placeholder="Cálculo, Física"></div>
           </div>
-          <div class="actions"><button class="btn ghost sm" id="tutorBtn" type="button">Guardar tutor</button></div>
+          <div class="actions"><button class="btn cyan sm" id="tutorBtn" type="button">Guardar tutor</button></div>
           <div id="tutorMsg" role="alert"></div>
         </details>
       </div>
 
-      <div class="card hidden" id="s2">
-        <h2>Elige fecha y horario</h2>
+      <div class="pane hidden" id="s2">
+        <h2>Elige <span class="hl">fecha y horario</span></h2>
         <div class="row">
           <div><label for="date">Fecha</label><input id="date" type="date"></div>
           <div><label for="dur">Duración</label>
@@ -144,8 +223,8 @@
         <div id="slotMsg" role="alert"></div>
       </div>
 
-      <div class="card hidden" id="s3">
-        <h2>Confirma tu reserva</h2>
+      <div class="pane hidden" id="s3">
+        <h2>Confirma tu <span class="hl">reserva</span></h2>
         <div class="summary" id="summary"></div>
         <div class="actions">
           <button class="btn ghost" id="back2" type="button">Atrás</button>
@@ -154,25 +233,28 @@
         <div id="bookMsg" role="alert"></div>
       </div>
 
-      <div class="card hidden" id="done">
-        <h2>¡Reserva confirmada!</h2>
+      <div class="pane hidden" id="done">
+        <div class="check">✓</div>
+        <h2>¡Reserva <span class="hl">confirmada</span>!</h2>
         <div class="summary" id="doneSummary"></div>
         <div class="actions">
           <button class="btn" id="seeMine" type="button">Ver mis reservas</button>
-          <button class="btn ghost" id="again" type="button">Reservar otra</button>
+          <button class="btn cyan" id="again" type="button">Reservar otra</button>
         </div>
       </div>
     </section>
 
     <section id="viewMine" class="hidden">
-      <div class="card">
-        <h2>Mis reservas</h2>
+      <div class="pane">
+        <h2>Mis <span class="hl">reservas</span></h2>
         <div id="mine"></div>
         <div id="mineMsg" role="alert"></div>
       </div>
     </section>
+    </div>
   </div>
 </main>
+<footer>Proyecto 2 · Tópicos Especiales II · Reservas de tutorías universitarias</footer>
 
 <script>
 (() => {
@@ -248,6 +330,9 @@
     $("viewMine").classList.toggle("hidden", which !== "mine");
     if (which === "mine") loadMine();
   }
+  const toWidget = () => $("widget").scrollIntoView({ behavior: "smooth", block: "start" });
+  $("ctaBook").onclick = () => { if (state.student) tab("book"); else $("email").focus(); toWidget(); };
+  $("ctaMine").onclick = () => { if (state.student) tab("mine"); else $("email").focus(); toWidget(); };
   $("tabBook").onclick = () => tab("book");
   $("tabMine").onclick = () => tab("mine");
   $("seeMine").onclick = () => tab("mine");
@@ -277,10 +362,10 @@
       const b = document.createElement("button");
       b.className = "tutor"; b.type = "button";
       const av = document.createElement("div"); av.className = "avatar"; av.textContent = (t.name[0] || "?").toUpperCase();
-      const tx = document.createElement("div");
       const n = document.createElement("strong"); n.textContent = t.name;
       const s = document.createElement("span"); s.className = "muted"; s.textContent = t.subjects || "Sin materias indicadas";
-      tx.append(n, s); b.append(av, tx);
+      const go = document.createElement("span"); go.className = "go"; go.textContent = "Seleccionar";
+      b.append(av, n, s, go);
       b.onclick = () => pickTutor(t);
       box.appendChild(b);
     });
