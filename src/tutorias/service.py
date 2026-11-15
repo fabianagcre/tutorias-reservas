@@ -11,6 +11,7 @@ CLOSE = time(18, 0)
 ALLOWED_DURATIONS = (30, 60, 90, 120)
 MAX_PER_DAY = 2
 MIN_CANCEL_HOURS = 2
+MAX_ADVANCE_DAYS = 14
 
 
 class BookingError(Exception):
@@ -69,6 +70,8 @@ class TutoringService:
             raise ValidationError("La hora de inicio debe ser en :00 o :30")  # RN4
         if start <= self.now():
             raise ValidationError("No se puede reservar en el pasado")  # RN5
+        if start - self.now() > timedelta(days=MAX_ADVANCE_DAYS):
+            raise ValidationError("Solo se puede reservar con un máximo de 14 días de anticipación")  # RN11
         end = start + timedelta(minutes=duration)
         if start.weekday() >= 5:
             raise ValidationError("Solo se atiende de lunes a viernes")  # RN3
