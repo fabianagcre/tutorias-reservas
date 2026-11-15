@@ -16,9 +16,24 @@ TUE = "2030-01-08"
 SAT = "2030-01-12"
 
 
+class Reloj:
+    """Reloj mutable: la prueba puede mover `ahora` para avanzar o retroceder el tiempo."""
+
+    def __init__(self, ahora: datetime):
+        self.ahora = ahora
+
+    def __call__(self) -> datetime:
+        return self.ahora
+
+
 @pytest.fixture
-def svc():
-    return TutoringService(connect(":memory:"), now=lambda: NOW)
+def reloj():
+    return Reloj(NOW)
+
+
+@pytest.fixture
+def svc(reloj):
+    return TutoringService(connect(":memory:"), now=reloj)
 
 
 @pytest.fixture

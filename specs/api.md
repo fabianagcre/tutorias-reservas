@@ -11,3 +11,5 @@
 | GET | /tutors/{id}/bookings | Reservas del tutor | 404 |
 
 409 = conflicto de horario; 422 = violación de regla de validación (RN3–RN6).
+
+Validación de entrada: `start` debe enviarse en hora local sin zona horaria (`2030-01-08T10:00:00`); con zona (`Z`, `-05:00`) → 422 (ver `docs/decisions.md`, D4).

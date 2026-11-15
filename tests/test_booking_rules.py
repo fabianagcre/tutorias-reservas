@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pytest
 from conftest import MON, SAT, TUE, at
 from tutorias.service import ConflictError, ForbiddenError, ValidationError
@@ -104,14 +106,28 @@ def test_validaciones_de_usuario(svc):
 
 
 def test_ca12_cancelar_con_anticipacion(world):
-    s = world["svc"]  # ahora = lunes 07:00; reserva martes 10:00 -> faltan >2 h
-    b = s.create_booking(world["t1"], world["s1"], at(TUE, "10:00"), 60)
+    s = world["svc"]  # ahora = lunes 07:00; reserva lunes 10:00 -> inicia en 3 h (CA12)
+    b = s.create_booking(world["t1"], world["s1"], at(MON, "10:00"), 60)
     assert s.cancel_booking(b["id"], world["s1"])["status"] == "cancelled"
 
 
 def test_ca13_no_cancelar_con_menos_de_2h(world):
     s = world["svc"]
-    b = s.create_booking(world["t1"], world["s1"], at(MON, "08:30"), 60)  # faltan 1.5 h
+    b = s.create_booking(world["t1"], world["s1"], at(MON, "08:00"), 60)  # inicia en 1 h (CA13)
     with pytest.raises(ValidationError):
         s.cancel_booking(b["id"], world["s1"])
     assert s.get_booking(b["id"])["status"] == "active"
+
+
+@pytest.mark.parametrize("ahora,cancela", [("08:00:00", True), ("08:00:01", False), ("07:59:59", True)])
+def test_rn10_borde_exacto_de_2h(world, reloj, ahora, cancela):
+    """RN10: con la reserva a las 10:00, faltar exactamente 2 h aún permite cancelar."""
+    s = world["svc"]
+    b = s.create_booking(world["t1"], world["s1"], at(MON, "10:00"), 60)
+    reloj.ahora = datetime.fromisoformat(f"{MON}T{ahora}")
+    if cancela:
+        assert s.cancel_booking(b["id"], world["s1"])["status"] == "cancelled"
+    else:
+        with pytest.raises(ValidationError):
+            s.cancel_booking(b["id"], world["s1"])
+        assert s.get_booking(b["id"])["status"] == "active"

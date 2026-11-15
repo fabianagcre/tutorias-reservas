@@ -18,10 +18,10 @@ Documentación interactiva: http://localhost:8000/docs
 - `src/tutorias/` código · `tests/` pruebas automatizadas
 
 ## Equipo
-| Rol (ciclo 1) | Integrante |
-|---|---|
-| Product / Spec Lead | por asignar |
-| Architecture / Development Lead | Fabiana |
-| QA / DevOps Lead | por asignar |
+| Rol | Ciclo 1 (specs/base + CE1) | Ciclo 2 (CE2) |
+|---|---|---|
+| Product / Spec Lead | Fabiana González Crespin (por confirmar) | Uriel Reyna |
+| Architecture / Development Lead | Fabiana González Crespin | Fabiana González Crespin |
+| QA / DevOps Lead | Uriel Reyna | por confirmar |
 
 Flujo de trabajo: issues → ramas `feature/*` → Pull Request con revisión → merge a `main` (CI con pytest).
