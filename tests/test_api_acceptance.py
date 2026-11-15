@@ -1,5 +1,5 @@
 import pytest
-from conftest import NOW, TUE
+from conftest import MON, NOW, TUE
 from fastapi.testclient import TestClient
 from tutorias.api import create_app
 from tutorias.db import connect
@@ -40,6 +40,15 @@ def test_reglas_devuelven_422(client):
     t, s1, _ = _setup(client)
     r = client.post("/bookings", json={"tutor_id": t, "student_id": s1, "start": f"{TUE}T19:00:00", "duration_minutes": 60})
     assert r.status_code == 422 and "detail" in r.json()
+
+
+def test_cancelar_con_menos_de_2h_devuelve_422(client):
+    t, s1, _ = _setup(client)  # ahora = lunes 07:00; reserva lunes 08:00 -> faltan 1 h (RN10)
+    r = client.post("/bookings", json={"tutor_id": t, "student_id": s1, "start": f"{MON}T08:00:00", "duration_minutes": 60})
+    bid = r.json()["id"]
+    r = client.post(f"/bookings/{bid}/cancel", json={"student_id": s1})
+    assert r.status_code == 422 and "detail" in r.json()
+    assert client.get(f"/students/{s1}/bookings").json()[0]["status"] == "active"
 
 
 def test_recursos_inexistentes_404(client):
