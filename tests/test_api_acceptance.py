@@ -51,5 +51,12 @@ def test_cancelar_con_menos_de_2h_devuelve_422(client):
     assert client.get(f"/students/{s1}/bookings").json()[0]["status"] == "active"
 
 
+@pytest.mark.parametrize("start", [f"{TUE}T10:00:00Z", f"{TUE}T10:00:00-05:00"])
+def test_start_con_zona_horaria_devuelve_422(client, start):
+    t, s1, _ = _setup(client)
+    r = client.post("/bookings", json={"tutor_id": t, "student_id": s1, "start": start, "duration_minutes": 60})
+    assert r.status_code == 422 and "sin zona horaria" in str(r.json()["detail"])
+
+
 def test_recursos_inexistentes_404(client):
     assert client.get("/tutors/99/availability", params={"date": TUE}).status_code == 404
