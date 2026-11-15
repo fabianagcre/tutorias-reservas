@@ -51,15 +51,20 @@
   .hero h1 strong { display: block; font-weight: 800; }
   .hero .cta { display: flex; gap: 12px; flex-wrap: wrap; }
   .hero .note { margin: 18px 0 0; font: italic 600 18px/1.3 "Caveat", "Segoe Script", "Comic Sans MS", cursive; color: var(--navy); }
-  .hero svg.art { width: 100%; max-width: 380px; justify-self: center; }
+  .hero figure.photo { margin: 0; position: relative; justify-self: center; width: 100%; max-width: 440px; }
+  .hero figure.photo img { width: 100%; height: auto; aspect-ratio: 4 / 3.3; object-fit: cover; border-radius: 28px; display: block; box-shadow: 0 24px 60px rgba(11,48,82,.25); }
+  .float { position: absolute; left: -22px; bottom: 28px; background: #fff; border-radius: 16px; padding: 10px 18px 10px 10px; display: flex; gap: 12px; align-items: center; box-shadow: 0 12px 30px rgba(11,48,82,.2); }
+  .float b { width: 38px; height: 38px; border-radius: 50%; background: var(--ok-l); color: var(--ok); display: grid; place-items: center; font-size: 18px; }
+  .float strong { display: block; color: var(--navy); font-size: 14px; line-height: 1.2; }
+  .float span { font-size: 12px; }
   .wave { display: block; width: 100%; height: 46px; margin-top: -45px; position: relative; }
 
   /* widget */
   main { padding-block: 10px 70px; }
   .sec-title { text-align: center; color: var(--navy); font-size: 28px; font-weight: 800; margin: 8px 0 6px; }
   .sec-sub { text-align: center; margin: 0 0 22px; }
-  .widget { background: #fff; border-radius: 22px; box-shadow: 0 10px 40px rgba(11,48,82,.10); border: 1px solid var(--line); overflow: hidden; max-width: 860px; margin: 0 auto; }
-  .tabs { display: flex; background: var(--soft-2); border-bottom: 1px solid var(--line); }
+  .widget { background: #fff; border-radius: 22px; box-shadow: 0 10px 40px rgba(11,48,82,.10); border: 1px solid var(--line); max-width: 860px; margin: 0 auto; }
+  .tabs { display: flex; background: var(--soft-2); border-bottom: 1px solid var(--line); border-radius: 21px 21px 0 0; overflow: hidden; }
   .tab { flex: 1; border: 0; background: transparent; padding: 15px 10px; font: inherit; font-weight: 800; color: var(--body); cursor: pointer; border-bottom: 3px solid transparent; }
   .tab[aria-selected="true"] { color: var(--navy); background: #fff; border-bottom-color: var(--cyan); }
   .steps { display: flex; border-bottom: 1px solid var(--line); }
@@ -75,7 +80,8 @@
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
   .tutor { background: var(--soft); border: 2px solid transparent; border-radius: 18px; padding: 22px 14px 18px; cursor: pointer; font: inherit; color: inherit; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: transform .12s, border-color .12s; }
   .tutor:hover { transform: translateY(-3px); border-color: var(--cyan); }
-  .avatar { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), #5a7dff); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 28px; margin-bottom: 8px; box-shadow: 0 0 0 5px #fff; }
+  .avatar { width: 84px; height: 84px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), #5a7dff); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 30px; margin-bottom: 8px; box-shadow: 0 0 0 5px #fff, 0 6px 18px rgba(11,48,82,.15); overflow: hidden; }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .tutor strong { color: var(--navy); font-size: 17px; }
   .tutor .go { margin-top: 10px; background: var(--cyan); color: #fff; font-weight: 800; font-size: 14px; padding: 7px 26px; border-radius: 50px; }
 
@@ -106,11 +112,39 @@
   details[open] summary { margin-bottom: 12px; }
   details .row { text-align: left; }
 
+  /* desplegable y calendario propios */
+  .dd, .dp { position: relative; }
+  .field { display: flex; justify-content: space-between; align-items: center; gap: 10px; width: 100%; padding: 11px 14px; border: 1.5px solid var(--line); border-radius: 12px; background: #fff; color: var(--navy); font: inherit; cursor: pointer; text-align: left; transition: border-color .15s, box-shadow .15s; }
+  .field:hover { border-color: var(--cyan); }
+  .field[aria-expanded="true"] { border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(10,174,239,.15); }
+  .field svg { width: 18px; height: 18px; flex: none; color: var(--cyan); transition: transform .15s; }
+  .field[aria-expanded="true"] .chev { transform: rotate(180deg); }
+  .pop { position: absolute; z-index: 20; top: calc(100% + 8px); left: 0; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 18px 50px rgba(11,48,82,.18); padding: 10px; }
+  .dpop { width: min(310px, 86vw); }
+  .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .cal-title { font-weight: 800; color: var(--navy); text-transform: capitalize; }
+  .nav { width: 34px; height: 34px; border-radius: 50%; border: 0; background: var(--soft); color: var(--navy); cursor: pointer; font-size: 18px; line-height: 1; }
+  .nav:hover:not(:disabled) { background: var(--line); }
+  .nav:disabled { opacity: .35; cursor: not-allowed; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; }
+  .cal-grid .wd { font-size: 11px; font-weight: 800; color: #97a6b8; padding: 4px 0; }
+  .day { aspect-ratio: 1; border: 0; border-radius: 50%; background: transparent; font: inherit; font-weight: 700; color: var(--navy); cursor: pointer; }
+  .day:hover:not(:disabled) { background: var(--soft); }
+  .day.today { box-shadow: inset 0 0 0 2px var(--cyan); }
+  .day.sel { background: var(--cyan); color: #fff; }
+  .day:disabled { color: #c3cddb; cursor: not-allowed; font-weight: 600; }
+  .cal-foot { margin: 8px 2px 0; font-size: 12px; color: var(--body); text-align: center; }
+  .opts { list-style: none; margin: 0; padding: 6px; min-width: 100%; }
+  .opts li { padding: 10px 14px; border-radius: 10px; display: flex; justify-content: space-between; gap: 14px; color: var(--navy); font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .opts li:hover, .opts li:focus-visible { background: var(--soft); outline: none; }
+  .opts li[aria-selected="true"] { color: var(--cyan); font-weight: 800; }
+
   footer { text-align: center; padding: 26px 20px 40px; font-size: 13px; background: var(--soft); }
+  footer small { display: block; margin-top: 6px; opacity: .8; }
 
   @media (max-width: 760px) {
     .hero .wrap { grid-template-columns: 1fr; padding-block: 30px 56px; }
-    .hero svg.art { display: none; }
+    .float { left: 10px; }
     .hero h1 { font-size: 30px; }
     .pane { padding: 22px 16px 26px; }
     .step span { display: none; } .step.on span { display: inline; }
@@ -140,17 +174,10 @@
       </div>
       <p class="note">Sin contraseñas ni mensajes cruzados: solo tu correo.</p>
     </div>
-    <svg class="art" viewBox="0 0 380 300" aria-hidden="true">
-      <rect x="40" y="30" width="300" height="230" rx="24" fill="#fff" stroke="#dde6f5" stroke-width="2"/>
-      <rect x="40" y="30" width="300" height="52" rx="24" fill="#0aaeef"/>
-      <rect x="40" y="58" width="300" height="24" fill="#0aaeef"/>
-      <circle cx="74" cy="56" r="9" fill="#fff" opacity=".9"/><rect x="92" y="50" width="90" height="12" rx="6" fill="#fff" opacity=".9"/>
-      <g fill="#eef4ff"><rect x="64" y="104" width="52" height="34" rx="10"/><rect x="164" y="104" width="52" height="34" rx="10"/><rect x="264" y="104" width="52" height="34" rx="10"/>
-      <rect x="64" y="152" width="52" height="34" rx="10"/><rect x="264" y="152" width="52" height="34" rx="10"/><rect x="64" y="200" width="52" height="34" rx="10"/><rect x="164" y="200" width="52" height="34" rx="10"/></g>
-      <rect x="164" y="152" width="52" height="34" rx="10" fill="#ff3259"/><path d="M178 169l8 8 14-15" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <rect x="264" y="200" width="52" height="34" rx="10" fill="#0aaeef"/>
-      <circle cx="330" cy="40" r="22" fill="#ff3259"/><path d="M321 40l6 6 12-12" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+    <figure class="photo">
+      <img src="/img/hero.jpg" alt="Estudiante estudiando en una biblioteca universitaria" width="1200" height="900">
+      <figcaption class="float"><b>✓</b><div><strong>Reserva confirmada</strong><span>Tutoría · 10:00 – 11:00</span></div></figcaption>
+    </figure>
   </div>
 </section>
 <svg class="wave" viewBox="0 0 1440 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46V20C240 -6 480 -6 720 18s480 26 720 0v28z" fill="#fff"/></svg>
@@ -208,9 +235,23 @@
       <div class="pane hidden" id="s2">
         <h2>Elige <span class="hl">fecha y horario</span></h2>
         <div class="row">
-          <div><label for="date">Fecha</label><input id="date" type="date"></div>
-          <div><label for="dur">Duración</label>
-            <select id="dur"><option value="30">30 min</option><option value="60" selected>60 min</option><option value="90">90 min</option><option value="120">120 min</option></select>
+          <div class="dp" id="dpWrap">
+            <label id="dateLbl">Fecha</label>
+            <input id="date" type="hidden">
+            <button type="button" class="field" id="dateBtn" aria-haspopup="dialog" aria-expanded="false" aria-labelledby="dateLbl dateLabel">
+              <span id="dateLabel">Selecciona una fecha</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+            </button>
+            <div class="pop dpop hidden" id="dpPop" role="dialog" aria-label="Calendario"></div>
+          </div>
+          <div class="dd" id="durDd">
+            <label id="durLbl">Duración</label>
+            <input id="dur" type="hidden" value="60">
+            <button type="button" class="field" id="durBtn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="durLbl durLabel">
+              <span id="durLabel">1 hora</span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <ul class="pop opts hidden" id="durList" role="listbox" aria-labelledby="durLbl"></ul>
           </div>
         </div>
         <p class="muted">Lunes a viernes, 08:00–18:00, hasta 14 días de anticipación.</p>
@@ -254,7 +295,7 @@
     </div>
   </div>
 </main>
-<footer>Proyecto 2 · Tópicos Especiales II · Reservas de tutorías universitarias</footer>
+<footer>Proyecto 2 · Tópicos Especiales II · Reservas de tutorías universitarias<small>Fotos: Zoshua Colah, Vitaly Gariev y The Connected Narrative en <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:inherit">Unsplash</a></small></footer>
 
 <script>
 (() => {
@@ -288,6 +329,85 @@
   const tutorName = (id) => (state.tutors.find((t) => t.id === id) || {}).name || `Tutor ${id}`;
   const addMin = (hhmm, m) => { const [h, mi] = hhmm.split(":").map(Number); const t = h * 60 + mi + m; return `${pad(Math.floor(t / 60))}:${pad(t % 60)}`; };
   function nextWeekday(from) { const d = new Date(from); while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1); return d; }
+
+  // --- calendario propio ---
+  const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  const dp = {
+    min: "", max: "", view: null,
+    set(v, load = true) {
+      $("date").value = v; $("dateLabel").textContent = fmtDate(v + "T00:00");
+      this.close(); if (load) loadSlots();
+    },
+    open() {
+      const base = new Date(($("date").value || this.min) + "T00:00");
+      this.view = new Date(base.getFullYear(), base.getMonth(), 1);
+      this.render(); $("dpPop").classList.remove("hidden"); $("dateBtn").setAttribute("aria-expanded", "true");
+    },
+    close() { $("dpPop").classList.add("hidden"); $("dateBtn").setAttribute("aria-expanded", "false"); },
+    shift(n) { this.view = new Date(this.view.getFullYear(), this.view.getMonth() + n, 1); this.render(); },
+    render() {
+      const y = this.view.getFullYear(), m = this.view.getMonth();
+      const mi = new Date(this.min + "T00:00"), ma = new Date(this.max + "T00:00");
+      const idx = y * 12 + m, lo = mi.getFullYear() * 12 + mi.getMonth(), hi = ma.getFullYear() * 12 + ma.getMonth();
+      const pop = $("dpPop"); pop.innerHTML = "";
+      const head = document.createElement("div"); head.className = "cal-head";
+      const prev = document.createElement("button"); prev.type = "button"; prev.className = "nav"; prev.textContent = "‹"; prev.setAttribute("aria-label", "Mes anterior"); prev.disabled = idx <= lo; prev.onclick = () => this.shift(-1);
+      const next = document.createElement("button"); next.type = "button"; next.className = "nav"; next.textContent = "›"; next.setAttribute("aria-label", "Mes siguiente"); next.disabled = idx >= hi; next.onclick = () => this.shift(1);
+      const title = document.createElement("div"); title.className = "cal-title"; title.textContent = `${MESES[m]} ${y}`;
+      head.append(prev, title, next); pop.appendChild(head);
+      const grid = document.createElement("div"); grid.className = "cal-grid";
+      ["L", "M", "X", "J", "V", "S", "D"].forEach((d) => { const w = document.createElement("div"); w.className = "wd"; w.textContent = d; grid.appendChild(w); });
+      const offset = (new Date(y, m, 1).getDay() + 6) % 7, total = new Date(y, m + 1, 0).getDate();
+      for (let i = 0; i < offset; i++) grid.appendChild(document.createElement("div"));
+      const hoy = ymd(new Date());
+      for (let d = 1; d <= total; d++) {
+        const v = `${y}-${pad(m + 1)}-${pad(d)}`, b = document.createElement("button");
+        b.type = "button"; b.className = "day"; b.textContent = d;
+        b.disabled = v < this.min || v > this.max || (offset + d - 1) % 7 >= 5;
+        if (v === hoy) b.classList.add("today");
+        if (v === $("date").value) b.classList.add("sel");
+        b.onclick = () => this.set(v);
+        grid.appendChild(b);
+      }
+      pop.appendChild(grid);
+      const foot = document.createElement("div"); foot.className = "cal-foot"; foot.textContent = "Lunes a viernes · hasta 14 días"; pop.appendChild(foot);
+    },
+  };
+  $("dateBtn").onclick = () => ($("dpPop").classList.contains("hidden") ? dp.open() : dp.close());
+
+  // --- desplegable propio (duración) ---
+  const DUR = [[30, "30 minutos"], [60, "1 hora"], [90, "1 hora 30 min"], [120, "2 horas"]];
+  const dd = {
+    open() {
+      const list = $("durList"); list.innerHTML = "";
+      DUR.forEach(([v, label]) => {
+        const li = document.createElement("li"); li.tabIndex = -1; li.setAttribute("role", "option"); li.dataset.v = v;
+        li.setAttribute("aria-selected", String(String(v) === $("dur").value));
+        const t = document.createElement("span"); t.textContent = label; li.appendChild(t);
+        if (String(v) === $("dur").value) { const c = document.createElement("span"); c.textContent = "✓"; li.appendChild(c); }
+        li.onclick = () => this.pick(v);
+        list.appendChild(li);
+      });
+      list.classList.remove("hidden"); $("durBtn").setAttribute("aria-expanded", "true");
+      (list.querySelector('[aria-selected="true"]') || list.firstChild).focus();
+    },
+    close(focus) { $("durList").classList.add("hidden"); $("durBtn").setAttribute("aria-expanded", "false"); if (focus) $("durBtn").focus(); },
+    pick(v) { $("dur").value = String(v); $("durLabel").textContent = DUR.find((d) => d[0] === v)[1]; this.close(true); },
+  };
+  $("durBtn").onclick = () => ($("durList").classList.contains("hidden") ? dd.open() : dd.close());
+  $("durBtn").onkeydown = (e) => { if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); dd.open(); } };
+  $("durList").onkeydown = (e) => {
+    const items = [...$("durList").children], i = items.indexOf(document.activeElement);
+    if (e.key === "ArrowDown") { e.preventDefault(); items[Math.min(i + 1, items.length - 1)].focus(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); items[Math.max(i - 1, 0)].focus(); }
+    else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (i >= 0) dd.pick(Number(items[i].dataset.v)); }
+    else if (e.key === "Escape" || e.key === "Tab") { dd.close(e.key === "Escape"); }
+  };
+  document.addEventListener("click", (e) => {
+    if (!$("dpWrap").contains(e.target)) dp.close();
+    if (!$("durDd").contains(e.target)) dd.close();
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") dp.close(); });
 
   // --- sesión ---
   function setStudent(s) {
@@ -362,6 +482,8 @@
       const b = document.createElement("button");
       b.className = "tutor"; b.type = "button";
       const av = document.createElement("div"); av.className = "avatar"; av.textContent = (t.name[0] || "?").toUpperCase();
+      const ph = document.createElement("img"); ph.alt = t.name; ph.src = `/img/t${((t.id - 1) % 5) + 1}.jpg`;
+      ph.onload = () => { av.textContent = ""; av.appendChild(ph); };
       const n = document.createElement("strong"); n.textContent = t.name;
       const s = document.createElement("span"); s.className = "muted"; s.textContent = t.subjects || "Sin materias indicadas";
       const go = document.createElement("span"); go.className = "go"; go.textContent = "Seleccionar";
@@ -384,8 +506,9 @@
   function pickTutor(t) {
     state.tutor = t; state.slot = null;
     const hoy = new Date(), max = new Date(); max.setDate(max.getDate() + 14);
-    const d = $("date"); d.min = ymd(hoy); d.max = ymd(max);
-    if (!d.value || d.value < d.min) d.value = ymd(nextWeekday(hoy));
+    dp.min = ymd(hoy); dp.max = ymd(max);
+    const cur = $("date").value;
+    if (!cur || cur < dp.min || cur > dp.max) dp.set(ymd(nextWeekday(hoy)), false);
     goStep(2); loadSlots();
   }
 
@@ -407,7 +530,6 @@
       });
     } catch (err) { show($("slotMsg"), err.message, "err"); }
   }
-  $("date").onchange = loadSlots;
   $("back1").onclick = () => goStep(1);
   $("back2").onclick = () => { show($("bookMsg"), ""); goStep(2); loadSlots(); };
 

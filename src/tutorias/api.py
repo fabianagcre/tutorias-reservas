@@ -3,6 +3,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, field_validator
 
 from .db import connect
@@ -43,6 +44,7 @@ class CancelIn(BaseModel):
 def create_app(service: TutoringService | None = None) -> FastAPI:
     svc = service or TutoringService(connect("tutorias.db"))
     app = FastAPI(title="Reservas de Tutorías")
+    app.mount("/img", StaticFiles(directory=WEB_DIR / "img"), name="img")
 
     @app.exception_handler(BookingError)
     async def _handle(_: Request, exc: BookingError):
