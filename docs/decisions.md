@@ -23,3 +23,9 @@ Ciclo seguido: cambio solicitado → `business-rules.md` (RN11) → `acceptance-
 Borde: exactamente 14 días se acepta; cualquier exceso (incluso 1 s) da 422. Como el "ahora" de `tests/conftest.py` es 07:00 (fuera de RN3), las pruebas fijan el reloj inyectado a las 10:00.
 Rama: `feature/ce2-anticipacion-maxima`.
 Resultado: 28 passed
+
+## D5 — Interfaz web estática servida por FastAPI
+**Contexto:** solo había API + Swagger; el estudiante no tenía una forma real de reservar (outcomes O2/O3).
+**Decisión:** una página única (`src/tutorias/web/index.html`, HTML/CSS/JS puro) servida en `/`, con flujo por pasos inspirado en SimplyBook.me: elegir tutor → fecha y horario → confirmar → mis reservas. Sin framework ni paso de build, para no tocar el stack ni el CI.
+**Consecuencias:** la interfaz no duplica reglas (D2): muestra el mensaje que devuelve la API (409/422). Se añadieron `GET /tutors` y `GET /students/by-email` (identificación por correo, sin contraseña: alcance del curso; la sesión se guarda en `localStorage`). Todo texto dinámico se inserta con `textContent`, nunca como HTML.
+**Rama / issue:** `feature/interfaz-web`, issue #10.

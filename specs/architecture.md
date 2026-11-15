@@ -12,6 +12,7 @@
 api.py        -> HTTP, validación de entrada, traducción de errores
 service.py    -> reglas de negocio (RN1..RN9), única capa con lógica
 db.py         -> esquema y conexión SQLite
+web/index.html-> interfaz web estática (HTML/CSS/JS sin build), servida en `/`
 ```
 - El reloj (`now`) se inyecta en el servicio para poder probar RN5 y cancelaciones.
 - Las reglas viven solo en `service.py`; la API no duplica validaciones de negocio.
