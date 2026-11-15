@@ -4,7 +4,7 @@ from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, Field, field_validator
 
 from .db import connect
 from .service import BookingError, TutoringService
@@ -16,6 +16,7 @@ WEB_DIR = Path(__file__).parent / "web"
 class TutorIn(BaseModel):
     name: str
     subjects: str = ""
+    photo: int = Field(default=0, ge=0, le=5)
 
 
 class StudentIn(BaseModel):
@@ -64,7 +65,7 @@ def create_app(service: TutoringService | None = None) -> FastAPI:
 
     @app.post("/tutors", status_code=201)
     def create_tutor(body: TutorIn):
-        return svc.create_tutor(body.name, body.subjects)
+        return svc.create_tutor(body.name, body.subjects, body.photo)
 
     @app.post("/students", status_code=201)
     def create_student(body: StudentIn):

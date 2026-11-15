@@ -41,11 +41,15 @@ class TutoringService:
         self._lock = threading.Lock()
 
     # ---------- altas ----------
-    def create_tutor(self, name: str, subjects: str = "") -> dict:
+    def create_tutor(self, name: str, subjects: str = "", photo: int = 0) -> dict:
         if not name.strip():
             raise ValidationError("El nombre del tutor es obligatorio")
-        cur = self.conn.execute("INSERT INTO tutors(name, subjects) VALUES (?, ?)", (name.strip(), subjects))
-        return {"id": cur.lastrowid, "name": name.strip(), "subjects": subjects}
+        if not 0 <= photo <= 5:
+            raise ValidationError("La foto debe ser un número entre 0 y 5")
+        cur = self.conn.execute(
+            "INSERT INTO tutors(name, subjects, photo) VALUES (?, ?, ?)", (name.strip(), subjects, photo)
+        )
+        return {"id": cur.lastrowid, "name": name.strip(), "subjects": subjects, "photo": photo}
 
     def create_student(self, name: str, email: str) -> dict:
         if not name.strip() or "@" not in email:
