@@ -42,3 +42,11 @@ def test_ca18_pagina_principal(client):
     assert r.status_code == 200
     assert "text/html" in r.headers["content-type"]
     assert "Reservas de Tutorías" in r.text
+
+
+def test_ca20_imagenes_estaticas(client):
+    for nombre in ("hero.jpg", "t1.jpg", "t5.jpg"):
+        r = client.get(f"/img/{nombre}")
+        assert r.status_code == 200
+        assert r.headers["content-type"] == "image/jpeg"
+    assert client.get("/img/no-existe.jpg").status_code == 404
