@@ -480,18 +480,19 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
 </section>
 
 <!-- =========================== 13 · CE2 =========================== -->
-<section class="slide" data-notes="<b>Presenta: Uriel.</b> CE2 – anticipación máxima de 14 días. Aquí se ve el ciclo rojo→verde: las pruebas se escribieron primero y fallaron (commit en rojo), luego el código las hizo pasar. Borde: 14 días exactos se acepta; 14 días y un segundo se rechaza. PR #8.">
+<section class="slide" data-notes="<b>Presenta: Uriel.</b> CE2 – anticipación máxima de 14 días (commits de Uriel). Aquí se ve el ciclo rojo→verde: primero la especificación (RN11, CA14–CA15, fila 8 del plan, api y decisions); luego las pruebas, que fallaron a propósito (2 fallan: CA15 y el borde de 14 días + 1 s; CA14 ya pasaba porque aceptar es el comportamiento previo); después el código las puso en verde (27). El resultado se registró en el plan y en decisions.md, y una prueba HTTP confirmó que la API responde 422 (28 en verde). Fabiana fusionó el PR #8; con lo de QA, main quedó en 34 pruebas. Borde: 14 días exactos se acepta; 14 días y un segundo se rechaza.">
     <div class="kicker reveal">5 · Evidencia — CE2</div>
     <div class="quote reveal">«Una reserva solo puede hacerse si la tutoría inicia como máximo 14 días después del momento actual.»</div>
     <div class="timeline reveal">
-        <div class="tl"><div class="dot">1</div><code>6cd6367</code><b>spec(CE2)</b><span>RN11, CA14–CA15, plan y API</span></div>
-        <div class="tl red"><div class="dot">2</div><code>9d70df4</code><b>pruebas en ROJO</b><span>CA14, CA15 y borde de 1 s</span></div>
-        <div class="tl green"><div class="dot">3</div><code>cb36367</code><b>feat(CE2)</b><span>validación → pruebas en verde</span></div>
-        <div class="tl gold"><div class="dot">4</div><code>0f6ccbe</code><b>resultados</b><span>registrados en el plan</span></div>
-        <div class="tl"><div class="dot">5</div><code>PR #8</code><b>revisión y merge</b><span>CI en verde</span></div>
+        <div class="tl"><div class="dot">1</div><code>6cd6367</code><b>spec(CE2)</b><span>RN11, CA14–15, plan</span></div>
+        <div class="tl red"><div class="dot">2</div><code>9d70df4</code><b>pruebas rojas</b><span>2 fallan: CA15 y borde</span></div>
+        <div class="tl green"><div class="dot">3</div><code>cb36367</code><b>feat(CE2)</b><span>27 en verde</span></div>
+        <div class="tl gold"><div class="dot">4</div><code>0f6ccbe</code><b>resultados</b><span>fila 8 del plan ✅</span></div>
+        <div class="tl green"><div class="dot">5</div><code>4e346da</code><b>prueba HTTP</b><span>422 · 28 en verde</span></div>
+        <div class="tl"><div class="dot">6</div><code>PR #8</code><b>merge a main</b><span>main: 34 en verde</span></div>
     </div>
     <div class="result-row reveal"><span class="pill soft">Regla nueva: RN11</span><span class="pill ok">14 días exactos → se acepta</span><span class="pill red">14 días + 1 s → 422</span></div>
-    <div class="files reveal">Archivos tocados: <code>specs/</code> regla, criterios, plan y API · <code>src/tutorias/service.py</code> · <code>tests/</code></div>
+    <div class="files reveal" style="margin-top:40px">Filas tocadas: <code>business-rules</code> RN11 · <code>acceptance-criteria</code> CA14–15 · <code>implementation-plan</code> fila 8 · <code>api</code> 422 · <code>decisions</code> · <code>service.py</code> · <code>test_ce2_anticipacion.py</code></div>
     <div class="foot"><span>Reservas de Tutorías · UTP</span><b class="num"></b></div>
 </section>
 
