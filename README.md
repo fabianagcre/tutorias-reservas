@@ -31,6 +31,6 @@ La base SQLite vive dentro del contenedor y se pierde al borrarlo (es una demost
 |---|---|---|
 | Product / Spec Lead | Fabiana González Crespin (por confirmar) | Uriel Reyna |
 | Architecture / Development Lead | Fabiana González Crespin | Fabiana González Crespin |
-| QA / DevOps Lead | Uriel Reyna | por confirmar |
+| QA / DevOps Lead | Uriel Reyna | Michael Portela |
 
 Flujo de trabajo: issues → ramas `feature/*` → Pull Request con revisión → merge a `main` (CI con pytest).
