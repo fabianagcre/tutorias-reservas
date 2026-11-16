@@ -465,17 +465,17 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
 </section>
 
 <!-- =========================== 12 · CE1 =========================== -->
-<section class="slide" data-notes="<b>Presenta: Uriel.</b> CE1 – cancelación con 2 horas de anticipación. Mostrar en GitHub el PR #4 y los tres commits en este orden. Resultado: RN10, CA12 y CA13, y las pruebas de borde exacto.">
+<section class="slide" data-notes="<b>Presenta: Uriel.</b> CE1 – cancelación con 2 horas de anticipación. Mostrar en GitHub el PR #4 y los tres commits en este orden (los escribió Fabiana, rol Spec/Dev del ciclo 1). Primero la especificación: RN10 en business-rules, CA12 y CA13 en acceptance-criteria, fila 7 del plan y el 422 de cancelación en api. Luego el código (MIN_CANCEL_HOURS = 2 en service.py) y las pruebas: de 22 a 24 pruebas en verde. Uriel, como QA del ciclo 1, revisó y fusionó el PR #4; después, en el PR #7 (QA), añadió la prueba del borde exacto con reloj mutable: a las 08:00 se puede cancelar una tutoría de las 10:00 y a las 08:00:01 ya no.">
     <div class="kicker reveal">5 · Evidencia — CE1</div>
     <div class="quote reveal">«Un estudiante solo puede cancelar si faltan al menos 2 horas para la tutoría.»</div>
     <div class="timeline reveal">
         <div class="tl"><div class="dot">1</div><code>31080d1</code><b>spec(CE1)</b><span>RN10, CA12–CA13, plan y API</span></div>
         <div class="tl gold"><div class="dot">2</div><code>b8292cf</code><b>feat(CE1)</b><span>validación en service.py</span></div>
-        <div class="tl green"><div class="dot">3</div><code>b2ba843</code><b>test(CE1)</b><span>pruebas CA12 y CA13</span></div>
-        <div class="tl"><div class="dot">4</div><code>PR #4</code><b>revisión y merge</b><span>CI en verde</span></div>
+        <div class="tl green"><div class="dot">3</div><code>b2ba843</code><b>test(CE1)</b><span>CA12–CA13 · 24 en verde</span></div>
+        <div class="tl"><div class="dot">4</div><code>PR #4</code><b>revisión y merge</b><span>revisado y fusionado por Uriel</span></div>
     </div>
-    <div class="result-row reveal"><span class="pill soft">Regla nueva: RN10</span><span class="pill soft">Criterios: CA12, CA13</span><span class="pill ok">Borde exacto probado: 08:00 sí · 08:00:01 no</span></div>
-    <div class="files reveal">Archivos tocados: <code>specs/</code> regla, criterios, plan y API · <code>src/tutorias/service.py</code> · <code>tests/</code></div>
+    <div class="result-row reveal"><span class="pill soft">Regla nueva: RN10</span><span class="pill soft">Criterios: CA12, CA13</span><span class="pill ok">Borde exacto (QA, PR #7): 08:00 sí · 08:00:01 no</span></div>
+    <div class="files reveal">Filas tocadas: <code>business-rules</code> RN10 · <code>acceptance-criteria</code> CA12–13 · <code>implementation-plan</code> fila 7 · <code>api</code> 422 al cancelar · <code>service.py</code> · <code>test_booking_rules.py</code></div>
     <div class="foot"><span>Reservas de Tutorías · UTP</span><b class="num"></b></div>
 </section>
 
