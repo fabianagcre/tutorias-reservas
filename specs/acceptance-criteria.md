@@ -17,3 +17,5 @@
 | CA13 | Dada una reserva que inicia en 1 h, cuando el dueño cancela, entonces 422 y la reserva sigue activa. | RN10 |
 | CA14 | Dado ahora = lunes 10:00, cuando un estudiante reserva una tutoría que inicia exactamente 14 días después (lunes 10:00), entonces se acepta. | RN11 |
 | CA15 | Dado ahora = lunes 10:00, cuando un estudiante reserva una tutoría que inicia 14 días y 30 min después (lunes 10:30), entonces 422. | RN11 |
+| CE3-a | Dado un estudiante con reservas activas de 60 min el lunes y el martes de la misma semana (120 min), cuando reserva 60 min el miércoles de esa semana (total justo 180 min), entonces se acepta. | RN13 |
+| CE3-b | Dado un estudiante con 180 min de reservas activas en la semana (lunes, martes y miércoles), cuando reserva 30 min el jueves de esa semana (total 210 min), entonces se rechaza con 422. | RN13 |
