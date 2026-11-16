@@ -123,11 +123,12 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
 .pains .card { flex: 1; font-size: 34px; font-weight: 700; line-height: 1.3; }
 .pains .card span { display: block; font-size: 70px; margin-bottom: 8px; }
 
-/* 3 · outcomes */
-.outcomes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; margin-top: 30px; }
-.outcomes .card { padding: 32px 26px; min-height: 520px; }
-.outcomes .o { font-family: var(--font-display); font-size: 84px; font-weight: 700; color: var(--gold); line-height: 1; }
-.outcomes h3 { font-size: 33px; line-height: 1.22; margin: 16px 0 22px; color: var(--purple); }
+/* 3 · outcomes (6 tarjetas en 3 × 2: número a la izquierda, texto a la derecha) */
+.outcomes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 30px; }
+.outcomes .card { padding: 32px 30px; display: grid; grid-template-columns: auto 1fr; column-gap: 24px; align-items: start; }
+.outcomes .o { font-family: var(--font-display); font-size: 84px; font-weight: 700; color: var(--gold); line-height: 1; grid-row: span 2; }
+.outcomes h3 { font-size: 33px; line-height: 1.22; margin: 4px 0 16px; color: var(--purple); }
+.outcomes .card.new { border: 3px solid var(--gold); }
 .outcomes p { font-size: 27px; line-height: 1.4; color: var(--muted); }
 .outcomes p b { color: var(--ink); display: block; font-size: 22px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 6px; }
 
@@ -271,7 +272,7 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
 .cycle { margin-top: 110px; } .cycle .c { padding: 46px 16px; font-size: 32px; } .cycle .c small { font-size: 24px; }
 .tests-grid { margin-top: 20px; } .test-list li { font-size: 37px; padding-top: 24px; padding-bottom: 24px; } .test-list li small { font-size: 28px; }
 .ai-table { font-size: 30px; border-spacing: 0 18px; } .ai-table td { padding: 26px 28px; } .ai-table th { font-size: 24px; }
-.outcomes .card { min-height: 600px; } .outcomes h3 { font-size: 38px; } .outcomes p { font-size: 31px; }
+.outcomes .card { padding: 30px 30px; } .outcomes h3 { font-size: 36px; } .outcomes p { font-size: 29px; }
 </style>
 </head>
 
@@ -299,9 +300,9 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
 </section>
 
 <!-- =========================== 2 · EL PROBLEMA (ODD) =========================== -->
-<section class="slide" data-notes="<b>Presenta: Uriel.</b> Fase 1 – ODD. La pregunta no es «qué app programamos» sino «qué resultado queremos para el estudiante». El problema real: tutorías pedidas por WhatsApp o en el pasillo; de ahí salen los cruces y el «¿estás libre?».">
+<section class="slide" data-notes="<b>Presenta: Uriel.</b> Fase 1 – ODD. La pregunta guía de specs/outcomes.md no es «qué app programamos» sino «qué resultado queremos conseguir para el estudiante y el tutor». El problema real: tutorías pedidas por WhatsApp o en el pasillo; de ahí salen los cruces de horario, los tutores con dos estudiantes a la vez, las citas olvidadas y el tiempo perdido preguntando «¿estás libre?». Cada tarjeta se convierte en un outcome de la siguiente diapositiva.">
     <div class="kicker reveal">1 · ODD — el problema</div>
-    <div class="big-q reveal">¿Qué <em style="color:var(--gold)">resultado</em> queremos conseguir para el estudiante?<br><s>¿Qué aplicación queremos programar?</s></div>
+    <div class="big-q reveal">¿Qué <em style="color:var(--gold)">resultado</em> queremos conseguir para el estudiante y el tutor?<br><s>¿Qué aplicación queremos programar?</s></div>
     <div class="pains">
         <div class="card reveal"><span>⏰</span>Cruces de horario entre estudiantes y tutores</div>
         <div class="card reveal"><span>👥</span>Tutores con dos estudiantes a la misma hora</div>
@@ -312,21 +313,22 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
 </section>
 
 <!-- =========================== 3 · OUTCOMES =========================== -->
-<section class="slide" data-notes="<b>Presenta: Uriel.</b> Los cinco outcomes con su indicador medible (specs/outcomes.md). Cada requisito posterior apunta a uno de estos. Mencionar que el outcome O5 es el que obliga a que cada regla tenga una prueba automatizada.">
+<section class="slide" data-notes="<b>Presenta: Uriel.</b> Los seis outcomes con su indicador medible (specs/outcomes.md). Cada requisito posterior apunta a uno de estos (columna «Outcome» de requirements.md). O5 es el que obliga a que cada regla tenga una prueba automatizada. O6 (borde dorado), «El administrador mantiene el catálogo de tutores sin intervención técnica», se añadió en el ciclo 2, cuando apareció el panel del administrador: el administrador dejó de ser «alcance futuro» y pasó a tener su propio resultado medible.">
     <div class="kicker reveal">1 · ODD — outcomes medibles</div>
-    <h2 class="reveal">Cinco resultados, <em>cada uno con indicador</em></h2>
+    <h2 class="reveal" style="font-size:76px; margin-bottom:26px">Seis resultados, <em>cada uno con indicador</em></h2>
     <div class="outcomes">
         <div class="card reveal"><div class="o">O1</div><h3>Eliminar cruces de horario</h3><p><b>Indicador</b>0 reservas solapadas en el sistema</p></div>
         <div class="card reveal"><div class="o">O2</div><h3>Encontrar espacios sin pedirle al tutor</h3><p><b>Indicador</b>Disponibilidad por tutor y fecha en una sola consulta</p></div>
         <div class="card reveal"><div class="o">O3</div><h3>Reservar y cancelar en pocos pasos</h3><p><b>Indicador</b>Reservar = 1 solicitud; cancelar = 1 solicitud</p></div>
         <div class="card reveal"><div class="o">O4</div><h3>Recuperar lo cancelado</h3><p><b>Indicador</b>Un horario cancelado vuelve a figurar como disponible</p></div>
         <div class="card reveal"><div class="o">O5</div><h3>Reglas claras y verificables</h3><p><b>Indicador</b>Cada regla de negocio tiene prueba automatizada</p></div>
+        <div class="card new reveal"><div class="o">O6</div><h3>Catálogo de tutores sin ayuda técnica</h3><p><b>Indicador</b>Alta, edición y baja de un tutor en ≤ 3 clics</p></div>
     </div>
     <div class="foot"><span>Reservas de Tutorías · UTP</span><b class="num"></b></div>
 </section>
 
 <!-- =========================== 4 · SDD =========================== -->
-<section class="slide" data-notes="<b>Presenta: Uriel.</b> Fase 2 – SDD. Los outcomes se convierten en especificaciones trazables: requisitos → reglas → criterios de aceptación → plan. Todo vive en la carpeta specs/ del repositorio, en el orden que pide la rúbrica.">
+<section class="slide" data-notes="<b>Presenta: Uriel.</b> Fase 2 – SDD. Los outcomes se convierten en especificaciones trazables: requisitos → reglas → criterios de aceptación → plan. Todo vive en la carpeta specs/ del repositorio, en el orden que pide la rúbrica. Leer en voz alta la cadena de ejemplo: O1 (0 cruces) → RF4 (crear reserva) → RN1 (no doble reserva del tutor) → CA2 (dada una reserva 10:00–11:00, otra a las 10:30 con el mismo tutor da 409) → la prueba test_ca2_no_doble_reserva_tutor. Regla del equipo: si una afirmación de la especificación no se puede comprobar con una prueba, está mal escrita.">
     <div class="kicker reveal">2 · SDD — de outcomes a especificaciones</div>
     <div class="ribbon reveal"><span class="pill">ODD</span><i>→</i><span class="pill gold">SDD</span><i>→</i><span class="pill soft">código</span><i>→</i><span class="pill soft">pruebas</span><i>→</i><span class="pill green">valor al usuario</span></div>
     <div class="pipeline reveal">
@@ -337,11 +339,12 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
         <div class="step"><b>implementation-plan</b><span>tareas, responsables y estado</span></div>
     </div>
     <p class="also reveal">También en <code>specs/</code> <code>architecture</code> <code>data-model</code> <code>api</code> — y en <code>docs/</code>: <code>ai-log</code> <code>decisions</code> <code>testing</code></p>
+    <p class="also reveal" style="margin-top:34px"><b style="color:var(--purple)">Trazabilidad:</b> <code>O1</code>→ <code>RF4</code>→ <code>RN1</code>→ <code>CA2</code>→ <code>test_ca2_no_doble_reserva_tutor</code></p>
     <div class="foot"><span>Reservas de Tutorías · UTP</span><b class="num"></b></div>
 </section>
 
 <!-- =========================== 5 · REGLAS =========================== -->
-<section class="slide" data-notes="<b>Presenta: Uriel.</b> Las doce reglas. Señalar en dorado la regla crítica (no doble reserva, RN1) y en morado las que nacieron de cambios de especificación durante el proyecto: RN10 y RN11. RN12 salió del panel de administración.">
+<section class="slide" data-notes="<b>Presenta: Uriel.</b> Las doce reglas. Señalar en dorado la regla crítica (no doble reserva, RN1) y en morado las que nacieron de cambios de especificación durante el proyecto: RN10 (CE1, PR #4) y RN11 (CE2, PR #8). RN12 salió del panel de administración (RF13, criterio CA27, outcome O6). Cada regla tiene al menos un criterio de aceptación y una prueba automatizada (outcome O5).">
     <div class="kicker reveal">2 · SDD — reglas de negocio</div>
     <h2 class="reveal" style="font-size:76px; margin-bottom:26px">Doce reglas, todas <em>verificables</em></h2>
     <div class="rules">
@@ -445,7 +448,7 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
 </section>
 
 <!-- =========================== 11 · EL CICLO DEL CAMBIO =========================== -->
-<section class="slide dark" data-notes="<b>Presentan: Uriel y Fabiana.</b> Requisito obligatorio de la rúbrica: a mitad del proyecto llegó un cambio inesperado y mostramos el ciclo completo. Lo hicimos dos veces (CE1 y CE2) y lo ensayamos una tercera para la presentación.">
+<section class="slide dark" data-notes="<b>Presentan: Uriel y Fabiana.</b> Requisito obligatorio de la rúbrica: a mitad del proyecto llegó un cambio inesperado y mostramos el ciclo completo. Lo hicimos dos veces en el repositorio (CE1 en la rama feature/ce1-cancelacion-2h, PR #4; CE2 en feature/ce2-anticipacion-maxima, PR #8) y ensayamos un tercero (CE3, rama de práctica feature/ce3-ensayo) para un posible cambio en vivo. El orden de los pasos es el que pide el profesor; en CE2 las pruebas se escribieron antes que el código (paso 6 antes del 5) para verlas fallar primero.">
     <div class="kicker reveal">5 · Cambios de especificación</div>
     <h2 class="reveal">Cuando cambia el requisito, <em>el proceso no se rompe</em></h2>
     <div class="cycle">
@@ -462,33 +465,34 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
 </section>
 
 <!-- =========================== 12 · CE1 =========================== -->
-<section class="slide" data-notes="<b>Presenta: Uriel.</b> CE1 – cancelación con 2 horas de anticipación. Mostrar en GitHub el PR #4 y los tres commits en este orden. Resultado: RN10, CA12 y CA13, y las pruebas de borde exacto.">
+<section class="slide" data-notes="<b>Presenta: Uriel.</b> CE1 – cancelación con 2 horas de anticipación. Mostrar en GitHub el PR #4 y los tres commits en este orden (los escribió Fabiana, rol Spec/Dev del ciclo 1). Primero la especificación: RN10 en business-rules, CA12 y CA13 en acceptance-criteria, fila 7 del plan y el 422 de cancelación en api. Luego el código (MIN_CANCEL_HOURS = 2 en service.py) y las pruebas: de 22 a 24 pruebas en verde. Uriel, como QA del ciclo 1, revisó y fusionó el PR #4; después, en el PR #7 (QA), añadió la prueba del borde exacto con reloj mutable: a las 08:00 se puede cancelar una tutoría de las 10:00 y a las 08:00:01 ya no.">
     <div class="kicker reveal">5 · Evidencia — CE1</div>
     <div class="quote reveal">«Un estudiante solo puede cancelar si faltan al menos 2 horas para la tutoría.»</div>
     <div class="timeline reveal">
         <div class="tl"><div class="dot">1</div><code>31080d1</code><b>spec(CE1)</b><span>RN10, CA12–CA13, plan y API</span></div>
         <div class="tl gold"><div class="dot">2</div><code>b8292cf</code><b>feat(CE1)</b><span>validación en service.py</span></div>
-        <div class="tl green"><div class="dot">3</div><code>b2ba843</code><b>test(CE1)</b><span>pruebas CA12 y CA13</span></div>
-        <div class="tl"><div class="dot">4</div><code>PR #4</code><b>revisión y merge</b><span>CI en verde</span></div>
+        <div class="tl green"><div class="dot">3</div><code>b2ba843</code><b>test(CE1)</b><span>CA12–CA13 · 24 en verde</span></div>
+        <div class="tl"><div class="dot">4</div><code>PR #4</code><b>revisión y merge</b><span>revisado y fusionado por Uriel</span></div>
     </div>
-    <div class="result-row reveal"><span class="pill soft">Regla nueva: RN10</span><span class="pill soft">Criterios: CA12, CA13</span><span class="pill ok">Borde exacto probado: 08:00 sí · 08:00:01 no</span></div>
-    <div class="files reveal">Archivos tocados: <code>specs/</code> regla, criterios, plan y API · <code>src/tutorias/service.py</code> · <code>tests/</code></div>
+    <div class="result-row reveal"><span class="pill soft">Regla nueva: RN10</span><span class="pill soft">Criterios: CA12, CA13</span><span class="pill ok">Borde exacto (QA, PR #7): 08:00 sí · 08:00:01 no</span></div>
+    <div class="files reveal">Filas tocadas: <code>business-rules</code> RN10 · <code>acceptance-criteria</code> CA12–13 · <code>implementation-plan</code> fila 7 · <code>api</code> 422 al cancelar · <code>service.py</code> · <code>test_booking_rules.py</code></div>
     <div class="foot"><span>Reservas de Tutorías · UTP</span><b class="num"></b></div>
 </section>
 
 <!-- =========================== 13 · CE2 =========================== -->
-<section class="slide" data-notes="<b>Presenta: Uriel.</b> CE2 – anticipación máxima de 14 días. Aquí se ve el ciclo rojo→verde: las pruebas se escribieron primero y fallaron (commit en rojo), luego el código las hizo pasar. Borde: 14 días exactos se acepta; 14 días y un segundo se rechaza. PR #8.">
+<section class="slide" data-notes="<b>Presenta: Uriel.</b> CE2 – anticipación máxima de 14 días (commits de Uriel). Aquí se ve el ciclo rojo→verde: primero la especificación (RN11, CA14–CA15, fila 8 del plan, api y decisions); luego las pruebas, que fallaron a propósito (2 fallan: CA15 y el borde de 14 días + 1 s; CA14 ya pasaba porque aceptar es el comportamiento previo); después el código las puso en verde (27). El resultado se registró en el plan y en decisions.md, y una prueba HTTP confirmó que la API responde 422 (28 en verde). Fabiana fusionó el PR #8; con lo de QA, main quedó en 34 pruebas. Borde: 14 días exactos se acepta; 14 días y un segundo se rechaza.">
     <div class="kicker reveal">5 · Evidencia — CE2</div>
     <div class="quote reveal">«Una reserva solo puede hacerse si la tutoría inicia como máximo 14 días después del momento actual.»</div>
     <div class="timeline reveal">
-        <div class="tl"><div class="dot">1</div><code>6cd6367</code><b>spec(CE2)</b><span>RN11, CA14–CA15, plan y API</span></div>
-        <div class="tl red"><div class="dot">2</div><code>9d70df4</code><b>pruebas en ROJO</b><span>CA14, CA15 y borde de 1 s</span></div>
-        <div class="tl green"><div class="dot">3</div><code>cb36367</code><b>feat(CE2)</b><span>validación → pruebas en verde</span></div>
-        <div class="tl gold"><div class="dot">4</div><code>0f6ccbe</code><b>resultados</b><span>registrados en el plan</span></div>
-        <div class="tl"><div class="dot">5</div><code>PR #8</code><b>revisión y merge</b><span>CI en verde</span></div>
+        <div class="tl"><div class="dot">1</div><code>6cd6367</code><b>spec(CE2)</b><span>RN11, CA14–15, plan</span></div>
+        <div class="tl red"><div class="dot">2</div><code>9d70df4</code><b>pruebas rojas</b><span>2 fallan: CA15 y borde</span></div>
+        <div class="tl green"><div class="dot">3</div><code>cb36367</code><b>feat(CE2)</b><span>27 en verde</span></div>
+        <div class="tl gold"><div class="dot">4</div><code>0f6ccbe</code><b>resultados</b><span>fila 8 del plan ✅</span></div>
+        <div class="tl green"><div class="dot">5</div><code>4e346da</code><b>prueba HTTP</b><span>422 · 28 en verde</span></div>
+        <div class="tl"><div class="dot">6</div><code>PR #8</code><b>merge a main</b><span>main: 34 en verde</span></div>
     </div>
     <div class="result-row reveal"><span class="pill soft">Regla nueva: RN11</span><span class="pill ok">14 días exactos → se acepta</span><span class="pill red">14 días + 1 s → 422</span></div>
-    <div class="files reveal">Archivos tocados: <code>specs/</code> regla, criterios, plan y API · <code>src/tutorias/service.py</code> · <code>tests/</code></div>
+    <div class="files reveal" style="margin-top:40px">Filas tocadas: <code>business-rules</code> RN11 · <code>acceptance-criteria</code> CA14–15 · <code>implementation-plan</code> fila 8 · <code>api</code> 422 · <code>decisions</code> · <code>service.py</code> · <code>test_ce2_anticipacion.py</code></div>
     <div class="foot"><span>Reservas de Tutorías · UTP</span><b class="num"></b></div>
 </section>
 
@@ -552,7 +556,7 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
 </section>
 
 <!-- =========================== 18 · ENSAYO CE3 =========================== -->
-<section class="slide dark" data-notes="<b>Presentan: todos.</b> «Estamos preparados para un cambio en vivo.» Ensayamos un tercer cambio (tope de 3 horas semanales por estudiante, RN13) en una rama de práctica que no se entrega. El mismo ciclo: spec, criterios, plan, pruebas rojas, código, pruebas verdes. Si el profesor pide un cambio, seguimos exactamente estos pasos.">
+<section class="slide dark" data-notes="<b>Presentan: todos.</b> «Estamos preparados para un cambio en vivo.» Ensayamos un tercer cambio (tope de 3 horas semanales por estudiante, RN13) en la rama de práctica feature/ce3-ensayo, que no se fusiona. El mismo ciclo: spec, criterios, plan, pruebas rojas, código, pruebas verdes; un commit por paso (177c958 → e3839e5). Tiempo medido: 4 min 49 s (meta &lt; 15 min). Detalle en docs/ensayo-ce3.md. Si el profesor pide un cambio, seguimos exactamente estos pasos.">
     <div class="kicker reveal">10 · Preparados para el cambio en vivo</div>
     <div class="ce3">
         <div>
@@ -561,10 +565,10 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
         </div>
         <div class="card reveal"><ol>
             <li>Regla nueva en <code>business-rules</code><small>RN13</small></li>
-            <li>Criterios CA28–CA30<small>Dado / Cuando / Entonces</small></li>
-            <li>Pruebas nuevas, primero en rojo<small>4 pruebas, 1 falla a propósito</small></li>
+            <li>Criterios CE3-a y CE3-b<small>Dado / Cuando / Entonces</small></li>
+            <li>Pruebas nuevas, primero en rojo<small>5 pruebas, 2 fallan antes del código</small></li>
             <li>Código en <code>service.py</code><small>una sola función</small></li>
-            <li>Resultado: 59 pruebas en verde<small>55 anteriores + 4 nuevas</small></li>
+            <li>Resultado: 39 pruebas en verde<small>34 de main + 5 nuevas · 4 min 49 s</small></li>
         </ol></div>
     </div>
     <div class="foot"><span>Reservas de Tutorías · UTP</span><b class="num"></b></div>
