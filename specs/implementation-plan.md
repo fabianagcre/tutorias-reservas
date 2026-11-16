@@ -10,6 +10,6 @@
 | 6 | CI en GitHub Actions | QA/DevOps | ✅ |
 | 7 | **Cambio de especificación (CE1)**: cancelación solo hasta 2 h antes | Todos | ✅ (RN10, CA12-13) |
 | 8 | **Cambio de especificación (CE2)**: reservar como máximo 14 días antes del inicio | Todos | ✅ (RN11, CA14-15) |
-| CE3 (ensayo) | **Cambio de especificación en vivo (CE3, ensayo)**: máximo 3 h de tutoría por estudiante por semana (lun–dom) | Todos | en curso (RN13, CE3-a/CE3-b) |
+| CE3 (ensayo) | **Cambio de especificación en vivo (CE3, ensayo)**: máximo 3 h de tutoría por estudiante por semana (lun–dom) | Todos | ✅ (RN13, CE3-a/CE3-b; 39 passed) |
 
 Rotación de roles: ciclo 1 = specs/base + CE1, ciclo 2 = cambio CE2 (los roles rotan).
