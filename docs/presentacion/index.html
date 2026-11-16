@@ -328,7 +328,7 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
 </section>
 
 <!-- =========================== 4 · SDD =========================== -->
-<section class="slide" data-notes="<b>Presenta: Uriel.</b> Fase 2 – SDD. Los outcomes se convierten en especificaciones trazables: requisitos → reglas → criterios de aceptación → plan. Todo vive en la carpeta specs/ del repositorio, en el orden que pide la rúbrica.">
+<section class="slide" data-notes="<b>Presenta: Uriel.</b> Fase 2 – SDD. Los outcomes se convierten en especificaciones trazables: requisitos → reglas → criterios de aceptación → plan. Todo vive en la carpeta specs/ del repositorio, en el orden que pide la rúbrica. Leer en voz alta la cadena de ejemplo: O1 (0 cruces) → RF4 (crear reserva) → RN1 (no doble reserva del tutor) → CA2 (dada una reserva 10:00–11:00, otra a las 10:30 con el mismo tutor da 409) → la prueba test_ca2_no_doble_reserva_tutor. Regla del equipo: si una afirmación de la especificación no se puede comprobar con una prueba, está mal escrita.">
     <div class="kicker reveal">2 · SDD — de outcomes a especificaciones</div>
     <div class="ribbon reveal"><span class="pill">ODD</span><i>→</i><span class="pill gold">SDD</span><i>→</i><span class="pill soft">código</span><i>→</i><span class="pill soft">pruebas</span><i>→</i><span class="pill green">valor al usuario</span></div>
     <div class="pipeline reveal">
@@ -339,6 +339,7 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
         <div class="step"><b>implementation-plan</b><span>tareas, responsables y estado</span></div>
     </div>
     <p class="also reveal">También en <code>specs/</code> <code>architecture</code> <code>data-model</code> <code>api</code> — y en <code>docs/</code>: <code>ai-log</code> <code>decisions</code> <code>testing</code></p>
+    <p class="also reveal" style="margin-top:34px"><b style="color:var(--purple)">Trazabilidad:</b> <code>O1</code>→ <code>RF4</code>→ <code>RN1</code>→ <code>CA2</code>→ <code>test_ca2_no_doble_reserva_tutor</code></p>
     <div class="foot"><span>Reservas de Tutorías · UTP</span><b class="num"></b></div>
 </section>
 
