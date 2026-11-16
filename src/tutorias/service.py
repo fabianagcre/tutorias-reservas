@@ -192,7 +192,9 @@ class TutoringService:
         limit = datetime.combine(day, CLOSE)
         while cursor < limit:
             nxt = cursor + timedelta(minutes=30)
-            if cursor > self.now() and not self._overlap_count("tutor_id", tutor_id, cursor, nxt):
+            if (
+                self.now() < cursor <= self.now() + timedelta(days=MAX_ADVANCE_DAYS)  # RN5, RN11
+            ) and not self._overlap_count("tutor_id", tutor_id, cursor, nxt):
                 slots.append(cursor.strftime("%H:%M"))
             cursor = nxt
         return slots
