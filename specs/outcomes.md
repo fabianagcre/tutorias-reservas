@@ -22,8 +22,9 @@ con dos estudiantes a la misma hora, citas olvidadas y tiempo perdido preguntand
 | O3 | Reservar y cancelar en pocos pasos | Reserva = 1 solicitud; cancelación = 1 solicitud |
 | O4 | Los espacios cancelados se recuperan automáticamente | Un horario cancelado vuelve a figurar como disponible |
 | O5 | Reglas claras y verificables | Cada regla de negocio tiene prueba automatizada |
+| O6 | El administrador mantiene el catálogo de tutores sin intervención técnica | Alta, edición y baja de un tutor en ≤ 3 clics (cada operación, desde `/admin`, sin tocar la base de datos ni la API a mano) |
 
 ## Usuarios
 - **Estudiante**: busca tutor, reserva, cancela.
 - **Tutor**: tiene materias y horario; ve su agenda.
-- **Administrador (alcance futuro)**: registra tutores.
+- **Administrador**: registra, edita y elimina tutores desde `/admin` (O6; desde el ciclo 2, RF11–RF13).
