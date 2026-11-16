@@ -90,4 +90,4 @@ TOTAL                        234      0     50      0   100%
 60 passed, 1 warning in 0.73s
 ```
 
-El aviso es una deprecación de `httpx` en `starlette.testclient`, ajena al proyecto. CI: ver el run del PR en GitHub Actions.
+El aviso es una deprecación de `httpx` en `starlette.testclient`, ajena al proyecto. CI del PR #24 en verde: https://github.com/fabianagcre/tutorias-reservas/actions/runs/43982200290 (la matriz 3.11/3.12 con cobertura llega con el PR #25: https://github.com/fabianagcre/tutorias-reservas/actions/runs/43982206019).
