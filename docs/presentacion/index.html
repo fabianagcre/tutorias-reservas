@@ -448,7 +448,7 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
 </section>
 
 <!-- =========================== 11 · EL CICLO DEL CAMBIO =========================== -->
-<section class="slide dark" data-notes="<b>Presentan: Uriel y Fabiana.</b> Requisito obligatorio de la rúbrica: a mitad del proyecto llegó un cambio inesperado y mostramos el ciclo completo. Lo hicimos dos veces en el repositorio (CE1 en la rama feature/ce1-cancelacion-2h, PR #4; CE2 en feature/ce2-anticipacion-maxima, PR #8) y preparamos un tercero (CE3) para un posible cambio en vivo. El orden de los pasos es el que pide el profesor; en CE2 las pruebas se escribieron antes que el código (paso 6 antes del 5) para verlas fallar primero.">
+<section class="slide dark" data-notes="<b>Presentan: Uriel y Fabiana.</b> Requisito obligatorio de la rúbrica: a mitad del proyecto llegó un cambio inesperado y mostramos el ciclo completo. Lo hicimos dos veces en el repositorio (CE1 en la rama feature/ce1-cancelacion-2h, PR #4; CE2 en feature/ce2-anticipacion-maxima, PR #8) y ensayamos un tercero (CE3, rama de práctica feature/ce3-ensayo) para un posible cambio en vivo. El orden de los pasos es el que pide el profesor; en CE2 las pruebas se escribieron antes que el código (paso 6 antes del 5) para verlas fallar primero.">
     <div class="kicker reveal">5 · Cambios de especificación</div>
     <h2 class="reveal">Cuando cambia el requisito, <em>el proceso no se rompe</em></h2>
     <div class="cycle">
@@ -556,7 +556,7 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
 </section>
 
 <!-- =========================== 18 · ENSAYO CE3 =========================== -->
-<section class="slide dark" data-notes="<b>Presentan: todos.</b> «Estamos preparados para un cambio en vivo.» Ensayamos un tercer cambio (tope de 3 horas semanales por estudiante, RN13) en una rama de práctica que no se entrega. El mismo ciclo: spec, criterios, plan, pruebas rojas, código, pruebas verdes. Si el profesor pide un cambio, seguimos exactamente estos pasos.">
+<section class="slide dark" data-notes="<b>Presentan: todos.</b> «Estamos preparados para un cambio en vivo.» Ensayamos un tercer cambio (tope de 3 horas semanales por estudiante, RN13) en la rama de práctica feature/ce3-ensayo, que no se fusiona. El mismo ciclo: spec, criterios, plan, pruebas rojas, código, pruebas verdes; un commit por paso (177c958 → e3839e5). Tiempo medido: 4 min 49 s (meta &lt; 15 min). Detalle en docs/ensayo-ce3.md. Si el profesor pide un cambio, seguimos exactamente estos pasos.">
     <div class="kicker reveal">10 · Preparados para el cambio en vivo</div>
     <div class="ce3">
         <div>
@@ -565,10 +565,10 @@ code, .mono { font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace; 
         </div>
         <div class="card reveal"><ol>
             <li>Regla nueva en <code>business-rules</code><small>RN13</small></li>
-            <li>Criterios CA28–CA30<small>Dado / Cuando / Entonces</small></li>
-            <li>Pruebas nuevas, primero en rojo<small>4 pruebas, 1 falla a propósito</small></li>
+            <li>Criterios CE3-a y CE3-b<small>Dado / Cuando / Entonces</small></li>
+            <li>Pruebas nuevas, primero en rojo<small>5 pruebas, 2 fallan antes del código</small></li>
             <li>Código en <code>service.py</code><small>una sola función</small></li>
-            <li>Resultado: 59 pruebas en verde<small>55 anteriores + 4 nuevas</small></li>
+            <li>Resultado: 39 pruebas en verde<small>34 de main + 5 nuevas · 4 min 49 s</small></li>
         </ol></div>
     </div>
     <div class="foot"><span>Reservas de Tutorías · UTP</span><b class="num"></b></div>
