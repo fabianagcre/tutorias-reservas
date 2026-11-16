@@ -6,10 +6,29 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-      - run: pip install -r requirements.txt
-      - run: pytest -q
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: pip install -r requirements.txt pytest-cov
+      - name: Pruebas con cobertura
+        run: |
+          echo "### Cobertura (Python ${{ matrix.python-version }})" >> "$GITHUB_STEP_SUMMARY"
+          pytest -q --cov=src/tutorias --cov-branch --cov-report=term-missing --cov-report=markdown-append:"$GITHUB_STEP_SUMMARY"
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t tutorias .
+      - name: Prueba de humo del contenedor
+        run: |
+          docker run -d -p 8000:8000 --name app tutorias
+          for i in $(seq 1 20); do curl -fs localhost:8000/docs && exit 0; sleep 1; done
+          docker logs app; exit 1
