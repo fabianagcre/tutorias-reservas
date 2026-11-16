@@ -13,5 +13,6 @@
 | RN9 | Las reservas contiguas (una termina a la hora en que otra empieza) NO se consideran solapadas. |
 | RN10 | **Cancelación con anticipación (CE1)**: solo se puede cancelar si faltan al menos 2 horas para el inicio. |
 | RN11 | **Anticipación máxima de reserva (CE2)**: una reserva solo puede hacerse si la tutoría inicia como máximo 14 días después del momento actual. |
+| RN13 | **Límite semanal de horas (CE3, ensayo)**: un estudiante no puede acumular más de 3 horas (180 min) de tutoría por semana. La semana va de lunes a domingo y se toma la de la fecha de inicio de la reserva; cuentan solo las reservas activas (las canceladas no suman, RN7). Una reserva que lleva el total justo a 180 min se acepta (límite ≤ 180 min); si lo excede, 422. |
 
 > Cambios posteriores a estas reglas se registran en `docs/decisions.md` y en el historial de git.
