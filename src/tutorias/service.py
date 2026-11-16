@@ -12,6 +12,7 @@ ALLOWED_DURATIONS = (30, 60, 90, 120)
 MAX_PER_DAY = 2
 MIN_CANCEL_HOURS = 2
 MAX_ADVANCE_DAYS = 14
+MAX_WEEKLY_MINUTES = 180
 
 
 class BookingError(Exception):
@@ -108,6 +109,22 @@ class TutoringService:
                 ).fetchone()["c"]
                 if n >= MAX_PER_DAY:
                     raise ValidationError("Máximo 2 reservas activas por día")  # RN6
+                monday = start.date() - timedelta(days=start.weekday())
+                week = self.conn.execute(
+                    'SELECT start, "end" FROM bookings WHERE student_id = ? '
+                    "AND status = 'active' AND start >= ? AND start < ?",
+                    (
+                        student_id,
+                        datetime.combine(monday, time.min).isoformat(),
+                        datetime.combine(monday + timedelta(days=7), time.min).isoformat(),
+                    ),
+                ).fetchall()
+                used = sum(
+                    (datetime.fromisoformat(r["end"]) - datetime.fromisoformat(r["start"])).seconds // 60
+                    for r in week
+                )
+                if used + duration_minutes > MAX_WEEKLY_MINUTES:
+                    raise ValidationError("Máximo 3 horas de tutoría por semana")  # RN13
                 created = self.now().isoformat()
                 cur = self.conn.execute(
                     'INSERT INTO bookings(tutor_id, student_id, start, "end", status, created_at) '
