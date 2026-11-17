@@ -11,5 +11,6 @@
 | 2026-11-15 | Revisión del PR #4 (CE1) | Claude Code (Opus 5.5, orquestación multiagente) | Revisar el PR con un agente revisor y verificadores adversariales | Aprobado con 5 observaciones | Merge del PR #4; observaciones atendidas en QA ciclo 1 |
 | 2026-11-15 | QA ciclo 1 | Claude Code (Opus 5.5, orquestación multiagente) | Atender las observaciones: borde de RN10, CA12/CA13, 422 HTTP, bug de zona horaria (500), docs | Rama `qa/ciclo1-observaciones-pr4`, 30 pruebas pasan | Aceptado; corrección en la API (D4) |
 | 2026-11-15 | Cambio de spec CE2 | Claude Code (Opus 5.5, orquestación multiagente) | Ejecutar ciclo de cambio: anticipación máxima de 14 días para reservar | Rama `feature/ce2-anticipacion-maxima` | En revisión por PR |
+| 2026-11-15 | Integración ciclo 2 (rol Architecture/Dev) | Claude Code (Sonnet 5.5) | Leer el estado del repo, revisar los PR #7 y #8, resolver conflictos de merge y fusionarlos; revisar arquitectura para RN10/RN11 y añadir `.gitignore` | PR #7 y #8 en `main` (34 pruebas pasan); `architecture.md` y `decisions.md` actualizados | Aceptado tras revisar el diff y correr pytest; conflictos en README y `specs/api.md` resueltos conservando ambas versiones |
 
 > Pendiente del equipo: añadir las entradas de las herramientas que cada integrante use realmente.
