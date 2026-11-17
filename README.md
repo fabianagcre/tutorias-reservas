@@ -19,10 +19,10 @@ Interfaz web (estudiante): http://localhost:8000/ · Panel del administrador (al
 - `src/tutorias/` código · `tests/` pruebas automatizadas
 
 ## Equipo
-| Rol | Ciclo 1 (specs/base + CE1) | Ciclo 2 (CE2) |
+| Rol | Ciclo 1 (specs/base + CE1) | Ciclo 2 (CE2, interfaz web y panel del administrador) |
 |---|---|---|
-| Product / Spec Lead | Fabiana González Crespin (por confirmar) | Uriel Reyna |
+| Product / Spec Lead | Fabiana González Crespin | Uriel Reyna |
 | Architecture / Development Lead | Fabiana González Crespin | Fabiana González Crespin |
-| QA / DevOps Lead | Uriel Reyna | por confirmar |
+| QA / DevOps Lead | Uriel Reyna | Michael (Mike) |
 
 Flujo de trabajo: issues → ramas `feature/*` → Pull Request con revisión → merge a `main` (CI con pytest).
