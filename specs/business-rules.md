@@ -13,5 +13,6 @@
 | RN9 | Las reservas contiguas (una termina a la hora en que otra empieza) NO se consideran solapadas. |
 | RN10 | **Cancelación con anticipación (CE1)**: solo se puede cancelar si faltan al menos 2 horas para el inicio. |
 | RN11 | **Anticipación máxima de reserva (CE2)**: una reserva solo puede hacerse si la tutoría inicia como máximo 14 días después del momento actual. |
+| RN12 | **Eliminar tutores**: no se puede eliminar un tutor con reservas activas cuya hora de inicio aún no ha llegado; primero deben cancelarse (409). |
 
 > Cambios posteriores a estas reglas se registran en `docs/decisions.md` y en el historial de git.

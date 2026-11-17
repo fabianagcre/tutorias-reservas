@@ -4,7 +4,8 @@ SCHEMA = """
 CREATE TABLE IF NOT EXISTS tutors (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    subjects TEXT NOT NULL DEFAULT ''
+    subjects TEXT NOT NULL DEFAULT '',
+    photo INTEGER NOT NULL DEFAULT 0
 );
 CREATE TABLE IF NOT EXISTS students (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,4 +31,8 @@ def connect(path: str = ":memory:") -> sqlite3.Connection:
     conn = sqlite3.connect(path, check_same_thread=False, isolation_level=None)
     conn.row_factory = sqlite3.Row
     conn.executescript(SCHEMA)
+    # migración: bases creadas antes de RF1 (foto) no tienen la columna
+    cols = [r["name"] for r in conn.execute("PRAGMA table_info(tutors)")]
+    if "photo" not in cols:
+        conn.execute("ALTER TABLE tutors ADD COLUMN photo INTEGER NOT NULL DEFAULT 0")
     return conn

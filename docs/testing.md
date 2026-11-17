@@ -8,14 +8,20 @@
   - `test_ca12_cancelar_con_anticipacion` / `test_ca13_no_cancelar_con_menos_de_2h`: alineadas con los datos de CA12 (inicia en 3 h) y CA13 (inicia en 1 h).
   - `test_cancelar_con_menos_de_2h_devuelve_422`: cancelación HTTP con <2 h → 422 y la reserva sigue activa.
   - `test_start_con_zona_horaria_devuelve_422`: `start` con zona (`Z`, `-05:00`) → 422 en lugar de 500 (D4).
+- Interfaz web (RF8–RF10, `tests/test_ui.py`): `GET /tutors` (CA16), `GET /students/by-email` con 200/404 y sin distinguir mayúsculas (CA17) y `GET /` devuelve la página (CA18).
+- `test_ca20_imagenes_estaticas`: las fotos se sirven en `/img/*` (200 `image/jpeg`) y una inexistente da 404 (CA20).
+- `test_ca21_foto_del_tutor` y `test_ca21_foto_fuera_de_rango_422` (3 casos): la foto se guarda y se lista; por defecto 0; fuera de 0–5 → 422 (CA21).
+- `test_ca22_panel_admin`, `test_ca23_el_estudiante_no_ve_el_alta_de_tutores`, `test_ca24_hoja_de_estilos`: el panel `/admin` existe, la pantalla del estudiante no tiene el alta de tutores y los estilos se sirven en `/css/app.css` (CA22–CA24).
+- Colores de los mensajes verificados en el navegador: error `rgb(176,16,47)` sobre rosado, éxito verde, aviso neutro morado.
+- `tests/test_admin_tutores.py` (8 casos): editar parcialmente y con datos inválidos, eliminar sin reservas, 404 y el bloqueo con reserva activa futura que se levanta al cancelar (CA25–CA27, RN12).
+- CA19 (flujo en la pantalla) se verificó a mano con un navegador automatizado (Chrome + Playwright, local, no forma parte del repo): registro → crear tutor → calendario propio (días deshabilitados, límite de 14 días, clic afuera y Esc cierran) y desplegable de duración (ratón y teclado) → elegir la foto del tutor al registrarlo (queda guardada y aparece en la tarjeta correcta) → reservar 10:00 → intento de 3.ª reserva del día (RN6) con el mensaje de la API → cancelar con confirmación → la sesión persiste al recargar → vista móvil.
 - Ejecutar: `pytest`. CI: `.github/workflows/ci.yml`.
 
 ## Resultados
-Run local en la rama `qa/ciclo1-observaciones-pr4` (Python 3.13, `python -m pytest -q`):
+Run local en la rama `feature/interfaz-web` (Python 3.14, `python -m pytest -q`; incluye QA ciclo 1, CE2 y la interfaz):
 
 ```
-..............................                                           [100%]
-30 passed, 1 warning in 0.92s
+55 passed, 2 warnings in 2.29s
 ```
 
 El aviso es una deprecación de `httpx` en `starlette.testclient`, ajena al proyecto. CI: ver el último run en GitHub Actions.

@@ -5,13 +5,19 @@ Trazabilidad: cada requisito apunta a un outcome (O#).
 ## Funcionales
 | ID | Requisito | Outcome |
 |----|-----------|---------|
-| RF1 | Registrar tutores con nombre y materias | O2 |
+| RF1 | Registrar tutores con nombre, materias y una foto opcional elegida de un catálogo de 5 (0 = sin foto) | O2 |
 | RF2 | Registrar estudiantes con nombre y correo | O3 |
 | RF3 | Consultar disponibilidad de un tutor en una fecha (franjas libres de 30 min) | O2 |
 | RF4 | Crear una reserva (estudiante, tutor, fecha, hora inicio, duración) | O1, O3 |
 | RF5 | Rechazar reservas que violen las reglas de negocio con un error claro | O1, O5 |
 | RF6 | Cancelar una reserva; el espacio vuelve a estar disponible | O3, O4 |
 | RF7 | Listar reservas de un estudiante y de un tutor | O3 |
+| RF8 | Listar los tutores registrados (nombre y materias) para que el estudiante elija | O2 |
+| RF9 | Identificar a un estudiante por su correo (sin contraseña, alcance del curso) | O3 |
+| RF10 | Interfaz web por pasos: elegir tutor → fecha y horario libre → duración → confirmar → ver y cancelar mis reservas; los errores de reglas se muestran con el mensaje de la API | O2, O3, O5 |
+| RF11 | El registro de tutores es una función del administrador: vive en una página aparte (`/admin`) y NO aparece en la pantalla del estudiante, que solo reserva y cancela. En esta versión del curso `/admin` no pide contraseña (mejora futura) | O2 |
+| RF12 | El administrador puede editar el nombre, las materias y la foto de un tutor | O2 |
+| RF13 | El administrador puede eliminar un tutor, salvo que tenga reservas activas futuras (RN12) | O1, O2 |
 
 ## No funcionales
 | ID | Requisito |

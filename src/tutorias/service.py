@@ -41,11 +41,15 @@ class TutoringService:
         self._lock = threading.Lock()
 
     # ---------- altas ----------
-    def create_tutor(self, name: str, subjects: str = "") -> dict:
+    def create_tutor(self, name: str, subjects: str = "", photo: int = 0) -> dict:
         if not name.strip():
             raise ValidationError("El nombre del tutor es obligatorio")
-        cur = self.conn.execute("INSERT INTO tutors(name, subjects) VALUES (?, ?)", (name.strip(), subjects))
-        return {"id": cur.lastrowid, "name": name.strip(), "subjects": subjects}
+        if not 0 <= photo <= 5:
+            raise ValidationError("La foto debe ser un número entre 0 y 5")
+        cur = self.conn.execute(
+            "INSERT INTO tutors(name, subjects, photo) VALUES (?, ?, ?)", (name.strip(), subjects, photo)
+        )
+        return {"id": cur.lastrowid, "name": name.strip(), "subjects": subjects, "photo": photo}
 
     def create_student(self, name: str, email: str) -> dict:
         if not name.strip() or "@" not in email:
@@ -55,6 +59,41 @@ class TutoringService:
         except sqlite3.IntegrityError:
             raise ConflictError("Ya existe un estudiante con ese correo")
         return {"id": cur.lastrowid, "name": name.strip(), "email": email.lower()}
+
+    def update_tutor(self, tutor_id: int, name: str | None = None, subjects: str | None = None, photo: int | None = None) -> dict:
+        row = self._require("tutors", tutor_id)
+        new_name = row["name"] if name is None else name.strip()
+        if not new_name:
+            raise ValidationError("El nombre del tutor es obligatorio")
+        new_subjects = row["subjects"] if subjects is None else subjects
+        new_photo = row["photo"] if photo is None else photo
+        if not 0 <= new_photo <= 5:
+            raise ValidationError("La foto debe ser un número entre 0 y 5")
+        self.conn.execute(
+            "UPDATE tutors SET name = ?, subjects = ?, photo = ? WHERE id = ?", (new_name, new_subjects, new_photo, tutor_id)
+        )
+        return dict(self._require("tutors", tutor_id))
+
+    def delete_tutor(self, tutor_id: int) -> dict:
+        self._require("tutors", tutor_id)
+        pendientes = self.conn.execute(
+            "SELECT COUNT(*) FROM bookings WHERE tutor_id = ? AND status = 'active' AND start > ?",
+            (tutor_id, self.now().isoformat()),
+        ).fetchone()[0]
+        if pendientes:  # RN12
+            raise ConflictError(f"No se puede eliminar: el tutor tiene {pendientes} reserva(s) activa(s) pendiente(s). Cancélalas primero.")
+        self.conn.execute("DELETE FROM tutors WHERE id = ?", (tutor_id,))
+        return {"deleted": tutor_id}
+
+    def list_tutors(self) -> list[dict]:
+        rows = self.conn.execute("SELECT * FROM tutors ORDER BY id").fetchall()
+        return [dict(r) for r in rows]
+
+    def find_student_by_email(self, email: str) -> dict:
+        row = self.conn.execute("SELECT * FROM students WHERE email = ?", (email.strip().lower(),)).fetchone()
+        if not row:
+            raise NotFoundError("No hay un estudiante registrado con ese correo")
+        return dict(row)
 
     def _require(self, table: str, id_: int) -> sqlite3.Row:
         row = self.conn.execute(f"SELECT * FROM {table} WHERE id = ?", (id_,)).fetchone()

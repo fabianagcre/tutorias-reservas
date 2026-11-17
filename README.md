@@ -9,8 +9,9 @@ Proyecto 2 — Tópicos Especiales II (Prof. Regis Rivera). Recorrido: **ODD →
 pip install -r requirements.txt
 uvicorn --app-dir src tutorias.api:create_app --factory --reload
 pytest
+python scripts/seed_demo.py   # opcional: tutores de demostración con foto
 ```
-Documentación interactiva: http://localhost:8000/docs
+Interfaz web (estudiante): http://localhost:8000/ · Panel del administrador (alta de tutores): http://localhost:8000/admin · Documentación interactiva de la API: http://localhost:8000/docs
 
 ## Estructura
 - `specs/` outcomes, requisitos, reglas de negocio, arquitectura, modelo de datos, API, criterios de aceptación, plan

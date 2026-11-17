@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reservas de Tutorías</title>
+<link rel="icon" type="image/png" href="/img/utp-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<div class="topbar"><div class="wrap">Universidad Tecnológica de Panamá · Tutorías académicas</div></div>
+<header>
+  <div class="wrap bar">
+    <div class="brand"><img src="/img/utp-logo.png" alt="Universidad Tecnológica de Panamá" width="52" height="52">Reservas de <span>Tutorías</span></div>
+    <div class="user hidden" id="userbox">
+      <span id="username"></span>
+      <button class="btn ghost sm" id="logout" type="button">Salir</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Sistema de reservas online para <strong>Tutorías universitarias</strong></h1>
+      <div class="cta">
+        <button class="btn" id="ctaBook" type="button">Reservar una tutoría</button>
+        <button class="btn green" id="ctaMine" type="button">Mis reservas</button>
+      </div>
+      <p class="note">Sin contraseñas ni mensajes cruzados: solo tu correo.</p>
+    </div>
+    <figure class="photo">
+      <img src="/img/hero.jpg" alt="Estudiante estudiando en una biblioteca universitaria" width="1200" height="900">
+      <figcaption class="float"><b>✓</b><div><strong>Reserva confirmada</strong><span>Tutoría · 10:00 – 11:00</span></div></figcaption>
+    </figure>
+  </div>
+</section>
+<svg class="wave" viewBox="0 0 1440 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46V20C240 -6 480 -6 720 18s480 26 720 0v28z" fill="#fff"/></svg>
+
+<main class="wrap" id="widget">
+
+  <!-- Identificación -->
+  <section id="login">
+    <h2 class="sec-title">Ingresa con tu <span class="hl">correo</span></h2>
+    <p class="sec-sub muted">Sin contraseña: si es tu primera vez, te registramos.</p>
+    <div class="widget"><div class="pane">
+    <form id="loginForm" novalidate>
+      <div class="row">
+        <div><label for="email">Correo</label><input id="email" type="email" placeholder="nombre@utp.ac.pa" autocomplete="email" required></div>
+        <div id="nameBox" class="hidden"><label for="name">Nombre completo</label><input id="name" autocomplete="name"></div>
+      </div>
+      <div class="actions"><button class="btn" id="loginBtn" type="submit">Continuar</button></div>
+      <div id="loginMsg" role="alert"></div>
+    </form>
+    </div></div>
+  </section>
+
+  <!-- App -->
+  <div id="app" class="hidden">
+    <h2 class="sec-title">Reserva tu <span class="hl">tutoría</span></h2>
+    <p class="sec-sub muted">Elige tutor, horario y confirma en tres pasos.</p>
+    <div class="widget">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tabBook" aria-selected="true" type="button">Reservar</button>
+      <button class="tab" role="tab" id="tabMine" aria-selected="false" type="button">Mis reservas</button>
+    </div>
+
+    <section id="viewBook">
+      <div class="steps" id="steps">
+        <div class="step" data-s="1"><b>1</b><span>Tutor</span></div>
+        <div class="step" data-s="2"><b>2</b><span>Fecha y horario</span></div>
+        <div class="step" data-s="3"><b>3</b><span>Confirmar</span></div>
+      </div>
+
+      <div class="pane" id="s1">
+        <h2>Elige un <span class="hl">tutor</span></h2>
+        <div class="grid" id="tutors"></div>
+        <p class="muted hidden" id="noTutors">Todavía no hay tutores disponibles. Pide al administrador que los registre y vuelve a intentar.</p>
+        <div id="tutorMsg" role="alert"></div>
+      </div>
+
+      <div class="pane hidden" id="s2">
+        <h2>Elige <span class="hl">fecha y horario</span></h2>
+        <div class="row">
+          <div class="dp" id="dpWrap">
+            <label id="dateLbl">Fecha</label>
+            <input id="date" type="hidden">
+            <button type="button" class="field" id="dateBtn" aria-haspopup="dialog" aria-expanded="false" aria-labelledby="dateLbl dateLabel">
+              <span id="dateLabel">Selecciona una fecha</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+            </button>
+            <div class="pop dpop hidden" id="dpPop" role="dialog" aria-label="Calendario"></div>
+          </div>
+          <div class="dd" id="durDd">
+            <label id="durLbl">Duración</label>
+            <input id="dur" type="hidden" value="60">
+            <button type="button" class="field" id="durBtn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="durLbl durLabel">
+              <span id="durLabel">1 hora</span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <ul class="pop opts hidden" id="durList" role="listbox" aria-labelledby="durLbl"></ul>
+          </div>
+        </div>
+        <p class="muted">Lunes a viernes, 08:00–18:00, hasta 14 días de anticipación.</p>
+        <div id="slots" class="slots"></div>
+        <p class="muted hidden" id="noSlots">No hay horarios libres ese día.</p>
+        <div class="actions">
+          <button class="btn ghost" id="back1" type="button">Atrás</button>
+          <button class="btn" id="next2" type="button" disabled>Continuar</button>
+        </div>
+        <div id="slotMsg" role="alert"></div>
+      </div>
+
+      <div class="pane hidden" id="s3">
+        <h2>Confirma tu <span class="hl">reserva</span></h2>
+        <div class="summary" id="summary"></div>
+        <div class="actions">
+          <button class="btn ghost" id="back2" type="button">Atrás</button>
+          <button class="btn" id="confirm" type="button">Confirmar reserva</button>
+        </div>
+        <div id="bookMsg" role="alert"></div>
+      </div>
+
+      <div class="pane hidden" id="done">
+        <div class="check">✓</div>
+        <h2>¡Reserva <span class="hl">confirmada</span>!</h2>
+        <div class="summary" id="doneSummary"></div>
+        <div class="actions">
+          <button class="btn" id="seeMine" type="button">Ver mis reservas</button>
+          <button class="btn green" id="again" type="button">Reservar otra</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="viewMine" class="hidden">
+      <div class="pane">
+        <h2>Mis <span class="hl">reservas</span></h2>
+        <div id="mine"></div>
+        <div id="mineMsg" role="alert"></div>
+      </div>
+    </section>
+    </div>
+  </div>
+</main>
+<footer>Proyecto 2 · Tópicos Especiales II · Universidad Tecnológica de Panamá<small>Fotos: Zoshua Colah, Vitaly Gariev y The Connected Narrative en <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:inherit">Unsplash</a></small></footer>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const state = { student: null, tutors: [], tutor: null, slot: null };
+  const DIAS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+
+  // --- utilidades ---
+  async function api(method, path, body) {
+    const res = await fetch(path, { method, headers: body ? { "Content-Type": "application/json" } : {}, body: body ? JSON.stringify(body) : undefined });
+    let data = null;
+    try { data = await res.json(); } catch (_) {}
+    if (!res.ok) {
+      let d = data && data.detail;
+      if (Array.isArray(d)) d = d.map((e) => (e.msg || "").replace(/^Value error, /, "")).join(" · ");
+      const err = new Error(d || `Error ${res.status}`);
+      err.status = res.status;
+      throw err;
+    }
+    return data;
+  }
+  const show = (el, text, kind) => {
+    el.innerHTML = "";
+    if (!text) return;
+    const d = document.createElement("div"); d.className = "msg " + kind; d.textContent = text; el.appendChild(d);
+  };
+  const pad = (n) => String(n).padStart(2, "0");
+  const ymd = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const fmtDate = (iso) => { const d = new Date(iso); return `${DIAS[d.getDay()]} ${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`; };
+  const fmtTime = (iso) => iso.slice(11, 16);
+  const tutorName = (id) => (state.tutors.find((t) => t.id === id) || {}).name || "Tutor eliminado";
+  const addMin = (hhmm, m) => { const [h, mi] = hhmm.split(":").map(Number); const t = h * 60 + mi + m; return `${pad(Math.floor(t / 60))}:${pad(t % 60)}`; };
+  function nextWeekday(from) { const d = new Date(from); while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1); return d; }
+
+  // --- calendario propio ---
+  const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  const dp = {
+    min: "", max: "", view: null,
+    set(v, load = true) {
+      $("date").value = v; $("dateLabel").textContent = fmtDate(v + "T00:00");
+      this.close(); if (load) loadSlots();
+    },
+    open() {
+      const base = new Date(($("date").value || this.min) + "T00:00");
+      this.view = new Date(base.getFullYear(), base.getMonth(), 1);
+      this.render(); $("dpPop").classList.remove("hidden"); $("dateBtn").setAttribute("aria-expanded", "true");
+    },
+    close() { $("dpPop").classList.add("hidden"); $("dateBtn").setAttribute("aria-expanded", "false"); },
+    shift(n) { this.view = new Date(this.view.getFullYear(), this.view.getMonth() + n, 1); this.render(); },
+    render() {
+      const y = this.view.getFullYear(), m = this.view.getMonth();
+      const mi = new Date(this.min + "T00:00"), ma = new Date(this.max + "T00:00");
+      const idx = y * 12 + m, lo = mi.getFullYear() * 12 + mi.getMonth(), hi = ma.getFullYear() * 12 + ma.getMonth();
+      const pop = $("dpPop"); pop.innerHTML = "";
+      const head = document.createElement("div"); head.className = "cal-head";
+      const prev = document.createElement("button"); prev.type = "button"; prev.className = "nav"; prev.textContent = "‹"; prev.setAttribute("aria-label", "Mes anterior"); prev.disabled = idx <= lo; prev.onclick = () => this.shift(-1);
+      const next = document.createElement("button"); next.type = "button"; next.className = "nav"; next.textContent = "›"; next.setAttribute("aria-label", "Mes siguiente"); next.disabled = idx >= hi; next.onclick = () => this.shift(1);
+      const title = document.createElement("div"); title.className = "cal-title"; title.textContent = `${MESES[m]} ${y}`;
+      head.append(prev, title, next); pop.appendChild(head);
+      const grid = document.createElement("div"); grid.className = "cal-grid";
+      ["L", "M", "X", "J", "V", "S", "D"].forEach((d) => { const w = document.createElement("div"); w.className = "wd"; w.textContent = d; grid.appendChild(w); });
+      const offset = (new Date(y, m, 1).getDay() + 6) % 7, total = new Date(y, m + 1, 0).getDate();
+      for (let i = 0; i < offset; i++) grid.appendChild(document.createElement("div"));
+      const hoy = ymd(new Date());
+      for (let d = 1; d <= total; d++) {
+        const v = `${y}-${pad(m + 1)}-${pad(d)}`, b = document.createElement("button");
+        b.type = "button"; b.className = "day"; b.textContent = d;
+        b.disabled = v < this.min || v > this.max || (offset + d - 1) % 7 >= 5;
+        if (v === hoy) b.classList.add("today");
+        if (v === $("date").value) b.classList.add("sel");
+        b.onclick = () => this.set(v);
+        grid.appendChild(b);
+      }
+      pop.appendChild(grid);
+      const foot = document.createElement("div"); foot.className = "cal-foot"; foot.textContent = "Lunes a viernes · hasta 14 días"; pop.appendChild(foot);
+    },
+  };
+  $("dateBtn").onclick = () => ($("dpPop").classList.contains("hidden") ? dp.open() : dp.close());
+
+  // --- desplegable propio (duración) ---
+  const DUR = [[30, "30 minutos"], [60, "1 hora"], [90, "1 hora 30 min"], [120, "2 horas"]];
+  const dd = {
+    open() {
+      const list = $("durList"); list.innerHTML = "";
+      DUR.forEach(([v, label]) => {
+        const li = document.createElement("li"); li.tabIndex = -1; li.setAttribute("role", "option"); li.dataset.v = v;
+        li.setAttribute("aria-selected", String(String(v) === $("dur").value));
+        const t = document.createElement("span"); t.textContent = label; li.appendChild(t);
+        if (String(v) === $("dur").value) { const c = document.createElement("span"); c.textContent = "✓"; li.appendChild(c); }
+        li.onclick = () => this.pick(v);
+        list.appendChild(li);
+      });
+      list.classList.remove("hidden"); $("durBtn").setAttribute("aria-expanded", "true");
+      (list.querySelector('[aria-selected="true"]') || list.firstChild).focus();
+    },
+    close(focus) { $("durList").classList.add("hidden"); $("durBtn").setAttribute("aria-expanded", "false"); if (focus) $("durBtn").focus(); },
+    pick(v) { $("dur").value = String(v); $("durLabel").textContent = DUR.find((d) => d[0] === v)[1]; this.close(true); },
+  };
+  $("durBtn").onclick = () => ($("durList").classList.contains("hidden") ? dd.open() : dd.close());
+  $("durBtn").onkeydown = (e) => { if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); dd.open(); } };
+  $("durList").onkeydown = (e) => {
+    const items = [...$("durList").children], i = items.indexOf(document.activeElement);
+    if (e.key === "ArrowDown") { e.preventDefault(); items[Math.min(i + 1, items.length - 1)].focus(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); items[Math.max(i - 1, 0)].focus(); }
+    else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (i >= 0) dd.pick(Number(items[i].dataset.v)); }
+    else if (e.key === "Escape" || e.key === "Tab") { dd.close(e.key === "Escape"); }
+  };
+  document.addEventListener("click", (e) => {
+    if (!$("dpWrap").contains(e.target)) dp.close();
+    if (!$("durDd").contains(e.target)) dd.close();
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") dp.close(); });
+
+  // --- sesión ---
+  function setStudent(s) {
+    state.student = s;
+    try { s ? localStorage.setItem("tutorias.student", JSON.stringify(s)) : localStorage.removeItem("tutorias.student"); } catch (_) {}
+    $("login").classList.toggle("hidden", !!s);
+    $("app").classList.toggle("hidden", !s);
+    $("userbox").classList.toggle("hidden", !s);
+    if (s) { $("username").textContent = s.name; start(); }
+  }
+  $("logout").onclick = () => {
+    setStudent(null); $("email").value = ""; $("name").value = "";
+    $("nameBox").classList.add("hidden"); show($("loginMsg"), "");
+  };
+
+  $("loginForm").onsubmit = async (e) => {
+    e.preventDefault();
+    const email = $("email").value.trim();
+    if (!email.includes("@")) return show($("loginMsg"), "Escribe un correo válido.", "err");
+    try {
+      if ($("nameBox").classList.contains("hidden")) {
+        try { return setStudent(await api("GET", "/students/by-email?email=" + encodeURIComponent(email))); }
+        catch (err) {
+          if (err.status !== 404) throw err;
+          $("nameBox").classList.remove("hidden"); $("name").focus();
+          return show($("loginMsg"), "No te encontramos. Escribe tu nombre para registrarte.", "info");
+        }
+      }
+      const name = $("name").value.trim();
+      if (!name) return show($("loginMsg"), "Escribe tu nombre.", "err");
+      setStudent(await api("POST", "/students", { name, email }));
+    } catch (err) { show($("loginMsg"), err.message, "err"); }
+  };
+
+  // --- pestañas ---
+  function tab(which) {
+    $("tabBook").setAttribute("aria-selected", which === "book");
+    $("tabMine").setAttribute("aria-selected", which === "mine");
+    $("viewBook").classList.toggle("hidden", which !== "book");
+    $("viewMine").classList.toggle("hidden", which !== "mine");
+    if (which === "mine") loadMine();
+  }
+  const toWidget = () => $("widget").scrollIntoView({ behavior: "smooth", block: "start" });
+  $("ctaBook").onclick = () => { if (state.student) tab("book"); else $("email").focus(); toWidget(); };
+  $("ctaMine").onclick = () => { if (state.student) tab("mine"); else $("email").focus(); toWidget(); };
+  $("tabBook").onclick = () => tab("book");
+  $("tabMine").onclick = () => tab("mine");
+  $("seeMine").onclick = () => tab("mine");
+
+  // --- pasos ---
+  function goStep(n) {
+    ["s1", "s2", "s3", "done"].forEach((id, i) => $(id).classList.toggle("hidden", n !== i + 1));
+    document.querySelectorAll(".step").forEach((el) => {
+      const s = Number(el.dataset.s);
+      el.classList.toggle("on", s === n); el.classList.toggle("done", s < n);
+    });
+    $("steps").classList.toggle("hidden", n === 4);
+  }
+
+  async function start() {
+    goStep(1); tab("book");
+    state.tutor = null; state.slot = null;
+    try { await loadTutors(); } catch (err) { show($("tutorMsg"), err.message, "err"); }
+  }
+
+  async function loadTutors() {
+    state.tutors = await api("GET", "/tutors");
+    const box = $("tutors"); box.innerHTML = "";
+    $("noTutors").classList.toggle("hidden", state.tutors.length > 0);
+    state.tutors.forEach((t) => {
+      const b = document.createElement("button");
+      b.className = "tutor"; b.type = "button";
+      const av = document.createElement("div"); av.className = "avatar"; av.textContent = (t.name[0] || "?").toUpperCase();
+      if (t.photo > 0) {
+        const ph = document.createElement("img"); ph.alt = t.name; ph.src = `/img/t${t.photo}.jpg`;
+        ph.onload = () => { av.textContent = ""; av.appendChild(ph); };
+      }
+      const n = document.createElement("strong"); n.textContent = t.name;
+      const s = document.createElement("span"); s.className = "muted"; s.textContent = t.subjects || "Sin materias indicadas";
+      const go = document.createElement("span"); go.className = "go"; go.textContent = "Seleccionar";
+      b.append(av, n, s, go);
+      b.onclick = () => pickTutor(t);
+      box.appendChild(b);
+    });
+  }
+
+
+  function pickTutor(t) {
+    state.tutor = t; state.slot = null;
+    const hoy = new Date(), max = new Date(); max.setDate(max.getDate() + 14);
+    dp.min = ymd(hoy); dp.max = ymd(max);
+    const cur = $("date").value;
+    if (!cur || cur < dp.min || cur > dp.max) dp.set(ymd(nextWeekday(hoy)), false);
+    goStep(2); loadSlots();
+  }
+
+  async function loadSlots() {
+    state.slot = null; $("next2").disabled = true; show($("slotMsg"), "");
+    const box = $("slots"); box.innerHTML = ""; $("noSlots").classList.add("hidden");
+    if (!$("date").value) return;
+    try {
+      const r = await api("GET", `/tutors/${state.tutor.id}/availability?date=${$("date").value}`);
+      $("noSlots").classList.toggle("hidden", r.free_slots.length > 0);
+      r.free_slots.forEach((h) => {
+        const b = document.createElement("button"); b.type = "button"; b.className = "slot"; b.textContent = h; b.setAttribute("aria-pressed", "false");
+        b.onclick = () => {
+          state.slot = h;
+          box.querySelectorAll(".slot").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+          $("next2").disabled = false;
+        };
+        box.appendChild(b);
+      });
+    } catch (err) { show($("slotMsg"), err.message, "err"); }
+  }
+  $("back1").onclick = () => goStep(1);
+  $("back2").onclick = () => { show($("bookMsg"), ""); goStep(2); loadSlots(); };
+
+  const resumen = () => {
+    const dur = Number($("dur").value), fin = addMin(state.slot, dur);
+    return [["Tutor", state.tutor.name], ["Fecha", fmtDate($("date").value + "T00:00")], ["Horario", `${state.slot} – ${fin} (${dur} min)`], ["Estudiante", state.student.name]];
+  };
+  const fill = (el, rows) => {
+    el.innerHTML = "";
+    rows.forEach(([k, v]) => {
+      const d = document.createElement("div");
+      const a = document.createElement("span"); a.className = "muted"; a.textContent = k;
+      const b = document.createElement("strong"); b.textContent = v;
+      d.append(a, b); el.appendChild(d);
+    });
+  };
+
+  $("next2").onclick = () => { fill($("summary"), resumen()); show($("bookMsg"), ""); goStep(3); };
+
+  $("confirm").onclick = async () => {
+    $("confirm").disabled = true;
+    try {
+      await api("POST", "/bookings", {
+        tutor_id: state.tutor.id, student_id: state.student.id,
+        start: `${$("date").value}T${state.slot}:00`, duration_minutes: Number($("dur").value),
+      });
+      fill($("doneSummary"), resumen()); goStep(4);
+    } catch (err) { show($("bookMsg"), err.message, "err"); }
+    finally { $("confirm").disabled = false; }
+  };
+  $("again").onclick = () => start();
+
+  // --- mis reservas ---
+  let pendingCancel = null;
+  async function loadMine(note) {
+    const box = $("mine");
+    try {
+      if (!state.tutors.length) state.tutors = await api("GET", "/tutors");
+      const list = await api("GET", `/students/${state.student.id}/bookings`);
+      box.innerHTML = "";
+      if (!list.length) { box.innerHTML = '<p class="muted">Aún no tienes reservas.</p>'; return; }
+      list.sort((a, b) => a.start.localeCompare(b.start)).forEach((b) => {
+        const row = document.createElement("div"); row.className = "booking";
+        const info = document.createElement("div");
+        const t = document.createElement("strong"); t.textContent = `${tutorName(b.tutor_id)} · ${fmtDate(b.start)}`;
+        const h = document.createElement("div"); h.className = "muted"; h.textContent = `${fmtTime(b.start)} – ${fmtTime(b.end)}`;
+        info.append(t, h);
+        const right = document.createElement("div"); right.style.display = "flex"; right.style.gap = "10px"; right.style.alignItems = "center";
+        const pill = document.createElement("span"); pill.className = "pill " + b.status; pill.textContent = b.status === "active" ? "Activa" : "Cancelada";
+        right.appendChild(pill);
+        if (b.status === "active") {
+          const c = document.createElement("button"); c.type = "button"; c.className = "btn danger";
+          c.textContent = pendingCancel === b.id ? "Sí, cancelar" : "Cancelar";
+          c.onclick = async () => {
+            if (pendingCancel !== b.id) { pendingCancel = b.id; return loadMine(); }
+            pendingCancel = null;
+            try {
+              await api("POST", `/bookings/${b.id}/cancel`, { student_id: state.student.id });
+              await loadMine({ text: "Reserva cancelada. El horario quedó libre.", kind: "ok" });
+            } catch (err) { await loadMine({ text: err.message, kind: "err" }); }
+          };
+          right.appendChild(c);
+        }
+        row.append(info, right); box.appendChild(row);
+      });
+    } catch (err) { note = { text: err.message, kind: "err" }; }
+    show($("mineMsg"), note ? note.text : "", note ? note.kind : "");
+  }
+
+  // --- arranque ---
+  try { const s = JSON.parse(localStorage.getItem("tutorias.student") || "null"); if (s && s.id) setStudent(s); } catch (_) {}
+})();
+</script>
+</body>
+</html>

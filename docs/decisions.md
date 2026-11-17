@@ -23,3 +23,20 @@ Ciclo seguido: cambio solicitado → `business-rules.md` (RN11) → `acceptance-
 Borde: exactamente 14 días se acepta; cualquier exceso (incluso 1 s) da 422. Como el "ahora" de `tests/conftest.py` es 07:00 (fuera de RN3), las pruebas fijan el reloj inyectado a las 10:00.
 Rama: `feature/ce2-anticipacion-maxima`.
 Resultado: 28 passed en la rama; 34 passed en `main` tras integrar con QA ciclo 1 (PR #7) y CE2 (PR #8).
+
+## D5 — Interfaz web estática servida por FastAPI
+**Contexto:** solo había API + Swagger; el estudiante no tenía una forma real de reservar (outcomes O2/O3).
+**Decisión:** una página única (`src/tutorias/web/index.html`, HTML/CSS/JS puro) servida en `/`, con flujo por pasos inspirado en SimplyBook.me: elegir tutor → fecha y horario → confirmar → mis reservas. Sin framework ni paso de build, para no tocar el stack ni el CI. Estilo visual tomado de la referencia de SimplyBook.me (fondo blanco/celeste, títulos azul marino con palabra resaltada, botones en píldora coral y celeste, hero con curva y widget de reserva con pestañas); ilustración y logotipo propios (SVG), ilustraciones y logotipo propios (SVG). Fotos de Unsplash (licencia gratuita, créditos en `web/img/CREDITOS.md`) descargadas al repo para no depender de internet en la demo. El `<select>` y el `<input type="date">` nativos se reemplazaron por un desplegable y un calendario propios (accesibles con teclado: flechas, Enter, Esc) con las mismas restricciones de las reglas: sin fines de semana, sin pasado y hasta 14 días. La foto del tutor la elige quien lo registra (catálogo de 5, 0 = sin foto) y se guarda en `tutors.photo` (RF1, CA21), para que el nombre y la foto coincidan; los tutores existentes quedan sin foto (muestran su inicial). `db.connect` migra bases viejas con `ALTER TABLE`. Paleta y logo: se usa el escudo oficial de la UTP y los colores del logo (morado `#482868`, verde `#284838`, negro y dorado `#b88828`).
+**Consecuencias:** la interfaz no duplica reglas (D2): muestra el mensaje que devuelve la API (409/422). Se añadieron `GET /tutors` y `GET /students/by-email` (identificación por correo, sin contraseña: alcance del curso; la sesión se guarda en `localStorage`). Todo texto dinámico se inserta con `textContent`, nunca como HTML.
+**Rama / issue:** `feature/interfaz-web`, issue #10.
+
+## D6 — El alta de tutores es del administrador, no del estudiante
+**Contexto:** la primera versión de la pantalla dejaba que el estudiante registrara tutores, lo cual no tiene sentido (en `outcomes.md` el administrador es quien registra tutores).
+**Decisión:** el formulario (nombre, materias, foto) vive en una página aparte, `/admin` (RF11, CA22–CA24); la pantalla del estudiante solo reserva y cancela, y si no hay tutores le indica que pida al administrador que los registre. Los estilos se compartieron en `/css/app.css`.
+**Limitación aceptada:** `/admin` y `POST /tutors` no piden contraseña (fuera del alcance del curso). Mejora futura: autenticación de administrador.
+**Mensajes:** los errores se muestran en rojo con ⚠, los éxitos en verde con ✓ y los avisos neutros (p. ej. «no te encontramos, escribe tu nombre») en el color de marca; antes ese aviso salía en verde y parecía un éxito.
+
+## D7 — Editar y eliminar tutores (RF12, RF13, RN12)
+**Decisión:** `PATCH /tutors/{id}` (edición parcial) y `DELETE /tutors/{id}`. Un tutor con reservas activas futuras no se puede eliminar (409): primero deben cancelarse (RN12), para no dejar a estudiantes con una cita sin tutor.
+**Alternativa descartada:** borrado lógico (columna `active`). Era más seguro para el historial pero añadía estado a todas las consultas; se prefirió el borrado real con la regla de bloqueo.
+**Consecuencia:** las reservas históricas (canceladas o pasadas) de un tutor eliminado se conservan y la pantalla del estudiante las muestra como «Tutor eliminado».

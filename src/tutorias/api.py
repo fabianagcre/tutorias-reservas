@@ -1,16 +1,28 @@
 from datetime import date, datetime
+from pathlib import Path
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
-from pydantic import BaseModel, field_validator
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field, field_validator
 
 from .db import connect
 from .service import BookingError, TutoringService
 
 
+WEB_DIR = Path(__file__).parent / "web"
+
+
 class TutorIn(BaseModel):
     name: str
     subjects: str = ""
+    photo: int = Field(default=0, ge=0, le=5)
+
+
+class TutorPatch(BaseModel):
+    name: str | None = None
+    subjects: str | None = None
+    photo: int | None = Field(default=None, ge=0, le=5)
 
 
 class StudentIn(BaseModel):
@@ -39,14 +51,40 @@ class CancelIn(BaseModel):
 def create_app(service: TutoringService | None = None) -> FastAPI:
     svc = service or TutoringService(connect("tutorias.db"))
     app = FastAPI(title="Reservas de Tutorías")
+    app.mount("/img", StaticFiles(directory=WEB_DIR / "img"), name="img")
+    app.mount("/css", StaticFiles(directory=WEB_DIR / "css"), name="css")
 
     @app.exception_handler(BookingError)
     async def _handle(_: Request, exc: BookingError):
         return JSONResponse(status_code=exc.status, content={"detail": str(exc)})
 
+    @app.get("/", include_in_schema=False)
+    def home():
+        return FileResponse(WEB_DIR / "index.html")
+
+    @app.get("/admin", include_in_schema=False)
+    def admin_panel():
+        return FileResponse(WEB_DIR / "admin.html")
+
+    @app.get("/tutors")
+    def list_tutors():
+        return svc.list_tutors()
+
+    @app.patch("/tutors/{tutor_id}")
+    def update_tutor(tutor_id: int, body: TutorPatch):
+        return svc.update_tutor(tutor_id, body.name, body.subjects, body.photo)
+
+    @app.delete("/tutors/{tutor_id}")
+    def delete_tutor(tutor_id: int):
+        return svc.delete_tutor(tutor_id)
+
+    @app.get("/students/by-email")
+    def student_by_email(email: str):
+        return svc.find_student_by_email(email)
+
     @app.post("/tutors", status_code=201)
     def create_tutor(body: TutorIn):
-        return svc.create_tutor(body.name, body.subjects)
+        return svc.create_tutor(body.name, body.subjects, body.photo)
 
     @app.post("/students", status_code=201)
     def create_student(body: StudentIn):
